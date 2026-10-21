@@ -11,8 +11,21 @@
   var EMAIL_RE =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
 
+  var INDIAN_MOBILE_RE = /^[6-9]\d{9}$/;
+
   function digitsOnly(mobile) {
     return String(mobile || '').replace(/\D/g, '');
+  }
+
+  function tenDigitMobile(mobile) {
+    var digits = digitsOnly(mobile);
+    if (digits.length === 12 && digits.indexOf('91') === 0 && INDIAN_MOBILE_RE.test(digits.slice(2))) {
+      return digits.slice(2);
+    }
+    if (digits.length === 11 && digits.charAt(0) === '0' && INDIAN_MOBILE_RE.test(digits.slice(1))) {
+      return digits.slice(1);
+    }
+    return digits;
   }
 
   function isValidEmail(email) {
@@ -24,37 +37,41 @@
     return true;
   }
 
+  /** Exactly 10 digits; Indian mobile (starts with 6–9). */
   function isValidMobile(mobile) {
-    var digits = digitsOnly(mobile);
-    if (digits.length < 10 || digits.length > 15) return false;
+    var digits = tenDigitMobile(mobile);
+    if (digits.length !== 10) return false;
+    if (!INDIAN_MOBILE_RE.test(digits)) return false;
     if (/^(\d)\1+$/.test(digits)) return false;
     return true;
   }
 
-  /** Prefer E.164-style value sent to CRM. */
   function normalizeMobile(mobile) {
-    var digits = digitsOnly(mobile);
-    if (digits.length === 10 && /^[6-9]/.test(digits)) {
+    var digits = tenDigitMobile(mobile);
+    if (INDIAN_MOBILE_RE.test(digits)) {
       return '+91' + digits;
     }
-    if (digits.length > 10) {
-      return '+' + digits;
-    }
-    return digits;
+    return digitsOnly(mobile);
   }
 
   function validateLeadContact(email, mobile_number) {
     var trimmedEmail = String(email || '').trim();
     var trimmedMobile = String(mobile_number || '').trim();
 
+    if (!trimmedEmail) {
+      return { ok: false, error: 'Email is required.', field: 'email' };
+    }
     if (!isValidEmail(trimmedEmail)) {
-      return { ok: false, error: 'Please enter a valid email address.' };
+      return { ok: false, error: 'Please enter a valid email address.', field: 'email' };
+    }
+    if (!trimmedMobile) {
+      return { ok: false, error: 'Mobile number is required.', field: 'mobile_number' };
     }
     if (!isValidMobile(trimmedMobile)) {
       return {
         ok: false,
-        error:
-          'Please enter a valid mobile number (10–15 digits; include country code if outside India).',
+        error: 'Please enter a valid 10-digit mobile number.',
+        field: 'mobile_number',
       };
     }
     return {

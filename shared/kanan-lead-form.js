@@ -7,6 +7,41 @@
     return url;
   }
 
+  function getFieldWrapper(form, fieldName) {
+    var input = form.querySelector('[name="' + fieldName + '"]');
+    if (!input) return null;
+    return input.closest('.kanan-field') || input.parentElement;
+  }
+
+  function ensureFieldErrorEl(wrapper) {
+    var el = wrapper.querySelector('.kanan-field-error');
+    if (!el) {
+      el = document.createElement('div');
+      el.className = 'kanan-field-error';
+      el.setAttribute('role', 'alert');
+      wrapper.appendChild(el);
+    }
+    return el;
+  }
+
+  function setFieldError(form, fieldName, message) {
+    var wrapper = getFieldWrapper(form, fieldName);
+    if (!wrapper) return;
+    var input = form.querySelector('[name="' + fieldName + '"]');
+    var errorEl = ensureFieldErrorEl(wrapper);
+    if (message) {
+      errorEl.textContent = message;
+      errorEl.classList.add('show');
+      wrapper.classList.add('kanan-field--error');
+      if (input) input.setAttribute('aria-invalid', 'true');
+    } else {
+      errorEl.textContent = '';
+      errorEl.classList.remove('show');
+      wrapper.classList.remove('kanan-field--error');
+      if (input) input.removeAttribute('aria-invalid');
+    }
+  }
+
   function setFormError(form, message) {
     var errorEl = form.querySelector('.kanan-form-error');
     if (!errorEl) return;
@@ -17,6 +52,54 @@
       errorEl.textContent = '';
       errorEl.classList.remove('show');
     }
+  }
+
+  function clearFieldErrors(form) {
+    form.querySelectorAll('.kanan-field-error').forEach(function (el) {
+      el.textContent = '';
+      el.classList.remove('show');
+    });
+    form.querySelectorAll('.kanan-field--error').forEach(function (el) {
+      el.classList.remove('kanan-field--error');
+    });
+    form.querySelectorAll('[name][aria-invalid="true"]').forEach(function (el) {
+      if (form.contains(el)) el.removeAttribute('aria-invalid');
+    });
+    setFormError(form, '');
+  }
+
+  function validateLeadFields(form, name, email, mobile_number, remarks) {
+    clearFieldErrors(form);
+    var valid = true;
+    var V = window.KananLeadValidation;
+
+    if (!name) {
+      setFieldError(form, 'name', 'Please enter your full name.');
+      valid = false;
+    }
+
+    if (!mobile_number) {
+      setFieldError(form, 'mobile_number', 'Mobile number is required.');
+      valid = false;
+    } else if (V && V.isValidMobile && !V.isValidMobile(mobile_number)) {
+      setFieldError(form, 'mobile_number', 'Please enter a valid 10-digit mobile number.');
+      valid = false;
+    }
+
+    if (!email) {
+      setFieldError(form, 'email', 'Email is required.');
+      valid = false;
+    } else if (V && V.isValidEmail && !V.isValidEmail(email)) {
+      setFieldError(form, 'email', 'Please enter a valid email address.');
+      valid = false;
+    }
+
+    if (!remarks) {
+      setFieldError(form, 'remarks', 'Please complete this field.');
+      valid = false;
+    }
+
+    return valid;
   }
 
   var UTM_DATASET_KEYS = {
@@ -37,10 +120,7 @@
     var mobile_number = String(formData.get('mobile_number') || '').trim();
     var remarks = String(formData.get('remarks') || '').trim();
 
-    setFormError(form, '');
-
-    if (!name || !email || !mobile_number || !remarks) {
-      setFormError(form, 'Please fill in all fields.');
+    if (!validateLeadFields(form, name, email, mobile_number, remarks)) {
       return;
     }
 
@@ -48,7 +128,8 @@
     if (contactCheck) {
       var validated = contactCheck(email, mobile_number);
       if (!validated.ok) {
-        setFormError(form, validated.error);
+        var field = validated.field || (validated.error && validated.error.toLowerCase().indexOf('email') !== -1 ? 'email' : 'mobile_number');
+        setFieldError(form, field, validated.error);
         return;
       }
       email = validated.email;
@@ -106,10 +187,20 @@
     }
   }
 
+  function bindFieldClearOnInput(form) {
+    form.querySelectorAll('input, select, textarea').forEach(function (input) {
+      if (!input.name) return;
+      input.addEventListener('input', function () {
+        setFieldError(form, input.name, '');
+      });
+    });
+  }
+
   function initKananLeadForms() {
     document.querySelectorAll('[data-kanan-lead-form]').forEach(function (form) {
       if (form.dataset.kananBound === '1') return;
       form.dataset.kananBound = '1';
+      bindFieldClearOnInput(form);
       form.addEventListener('submit', handleLeadSubmit);
     });
   }

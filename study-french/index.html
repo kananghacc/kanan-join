@@ -141,6 +141,24 @@
       display: block;
     }
 
+    .lead-form .field-error {
+      display: none;
+      margin-top: 0.375rem;
+      font-size: 0.8125rem;
+      line-height: 1.35;
+      color: #B91C1C;
+    }
+
+    .lead-form .field-error.show {
+      display: block;
+    }
+
+    .lead-form .field--error input,
+    .lead-form .field--error select {
+      border-color: #f87171;
+      box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.22);
+    }
+
     .lead-form button[type="submit"]:disabled {
       opacity: 0.7;
       cursor: not-allowed;
@@ -1621,6 +1639,41 @@
       }
     }
 
+    function getLeadFieldWrapper(form, fieldName) {
+      const input = form.querySelector('[name="' + fieldName + '"]');
+      if (!input) return null;
+      return input.closest('.field') || input.parentElement;
+    }
+
+    function ensureLeadFieldErrorEl(wrapper) {
+      let el = wrapper.querySelector('.field-error');
+      if (!el) {
+        el = document.createElement('div');
+        el.className = 'field-error';
+        el.setAttribute('role', 'alert');
+        wrapper.appendChild(el);
+      }
+      return el;
+    }
+
+    function setLeadFieldError(form, fieldName, message) {
+      const wrapper = getLeadFieldWrapper(form, fieldName);
+      if (!wrapper) return;
+      const input = form.querySelector('[name="' + fieldName + '"]');
+      const errorEl = ensureLeadFieldErrorEl(wrapper);
+      if (message) {
+        errorEl.textContent = message;
+        errorEl.classList.add('show');
+        wrapper.classList.add('field--error');
+        if (input) input.setAttribute('aria-invalid', 'true');
+      } else {
+        errorEl.textContent = '';
+        errorEl.classList.remove('show');
+        wrapper.classList.remove('field--error');
+        if (input) input.removeAttribute('aria-invalid');
+      }
+    }
+
     function setFormError(form, message) {
       const errorEl = form.querySelector('.form-error');
       if (!errorEl) return;
@@ -1633,27 +1686,69 @@
       }
     }
 
+    function clearLeadFieldErrors(form) {
+      form.querySelectorAll('.field-error').forEach(function (el) {
+        el.textContent = '';
+        el.classList.remove('show');
+      });
+      form.querySelectorAll('.field--error').forEach(function (el) {
+        el.classList.remove('field--error');
+      });
+      form.querySelectorAll('[name][aria-invalid="true"]').forEach(function (el) {
+        if (form.contains(el)) el.removeAttribute('aria-invalid');
+      });
+      setFormError(form, '');
+    }
+
+    function validateLeadFormFields(form, name, email, mobile_number, remarks) {
+      clearLeadFieldErrors(form);
+      let valid = true;
+      const V = window.KananLeadValidation;
+
+      if (!name) {
+        setLeadFieldError(form, 'name', 'Please enter your full name.');
+        valid = false;
+      }
+      if (!mobile_number) {
+        setLeadFieldError(form, 'mobile_number', 'Mobile number is required.');
+        valid = false;
+      } else if (V && V.isValidMobile && !V.isValidMobile(mobile_number)) {
+        setLeadFieldError(form, 'mobile_number', 'Please enter a valid 10-digit mobile number.');
+        valid = false;
+      }
+      if (!email) {
+        setLeadFieldError(form, 'email', 'Email is required.');
+        valid = false;
+      } else if (V && V.isValidEmail && !V.isValidEmail(email)) {
+        setLeadFieldError(form, 'email', 'Please enter a valid email address.');
+        valid = false;
+      }
+      if (!remarks) {
+        setLeadFieldError(form, 'remarks', 'Please enter your educational qualification.');
+        valid = false;
+      }
+      return valid;
+    }
+
     async function handleLeadSubmit(event) {
       event.preventDefault();
       const form = event.currentTarget;
       const submitBtn = form.querySelector('button[type="submit"]');
       const formData = new FormData(form);
-      const name = String(formData.get('name') || '').trim();
-      const email = String(formData.get('email') || '').trim();
-      const mobile_number = String(formData.get('mobile_number') || '').trim();
+      let name = String(formData.get('name') || '').trim();
+      let email = String(formData.get('email') || '').trim();
+      let mobile_number = String(formData.get('mobile_number') || '').trim();
       const remarks = String(formData.get('remarks') || '').trim();
 
-      setFormError(form, '');
-
-      if (!name || !email || !mobile_number || !remarks) {
-        setFormError(form, 'Please fill in all fields.');
+      if (!validateLeadFormFields(form, name, email, mobile_number, remarks)) {
         return;
       }
 
       if (window.KananLeadValidation && window.KananLeadValidation.validateLeadContact) {
         var validated = window.KananLeadValidation.validateLeadContact(email, mobile_number);
         if (!validated.ok) {
-          setFormError(form, validated.error);
+          var field = validated.field || (validated.error && validated.error.toLowerCase().indexOf('email') !== -1 ? 'email' : 'mobile_number');
+          setLeadFieldError(form, field, validated.error);
           return;
         }
         email = validated.email;
@@ -1702,6 +1797,12 @@
 
     function initializeLeadForms() {
       document.querySelectorAll('[data-lead-form]').forEach(function (form) {
+        form.querySelectorAll('input, select, textarea').forEach(function (input) {
+          if (!input.name) return;
+          input.addEventListener('input', function () {
+            setLeadFieldError(form, input.name, '');
+          });
+        });
         form.addEventListener('submit', handleLeadSubmit);
       });
     }
