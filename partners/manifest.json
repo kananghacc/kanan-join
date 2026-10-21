@@ -1,0 +1,26 @@
+{
+  "name": "Kanan.co - Learn French in Canada",
+  "short_name": "Kanan.co",
+  "description": "Master French from A1 to B2, prepare for TEF/TCF, and unlock PR pathways through Francophone category. Open to all students in Canada.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#03A653",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/faviconV2.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "language"],
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
+}
+
+
+

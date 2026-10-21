@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kanan.co - IELTS Online Coaching | Achieve Your Dream Score</title>
+    <meta name="description" content="Join Kanan.co for expert IELTS online coaching. Get personalized training, practice tests, and achieve your target band score from anywhere. Book a free consultation today!" />
+    <link rel="icon" type="image/png" href="faviconV2.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Manrope','ui-sans-serif','system-ui'] }, colors: { brand: { DEFAULT: '#6C4CF7', dark:'#5035E6', light:'#EEE9FF' }, accent: { DEFAULT:'#FF5A5F', dark:'#E6484D' }, ink: { DEFAULT:'#0F0F14' } } } } };</script>
+    <style>
+      .shadow-pop { box-shadow: 0 14px 40px rgba(108,76,247,0.35); }
+      .shadow-card { box-shadow: 0 10px 24px rgba(15,15,20,0.12); }
+      .grain { background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px); background-size: 6px 6px; }
+    </style>
+  </head>
+  <body class="font-sans text-ink bg-white">
+    <!-- Header -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-black/5">
+      <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <img src="kanan-logo.svg" alt="Kanan" class="h-7" />
+        <a href="#apply" class="inline-flex items-center rounded-full px-4 py-2 text-white bg-brand hover:bg-brand-dark transition shadow-pop text-sm font-semibold">Start for FREE</a>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-b from-brand/10 via-transparent to-transparent"></div>
+      <div class="max-w-6xl mx-auto px-4 py-14 md:py-20">
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <div class="inline-flex items-center gap-2 rounded-full bg-brand light px-3 py-1 text-xs font-semibold bg-brand/10 text-brand">LIVE Online • Flexible Timings</div>
+            <h1 class="mt-4 text-3xl md:text-5xl font-extrabold leading-tight">Achieve 8+ IELTS Band in 6 Weeks</h1>
+            <p class="mt-4 text-lg text-black/70 max-w-xl">Join 1,000+ students who achieved their target scores – with free demo class, certified trainers, 600+ videos and mock tests.</p>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <a href="#apply" class="rounded-full px-6 py-3 bg-accent text-white font-bold shadow-pop hover:bg-accent-dark">Start for FREE</a>
+              <a href="#features" class="rounded-full px-6 py-3 border border-black/10 text-ink font-semibold hover:bg-black/5">See what you get</a>
+            </div>
+            <ul class="mt-6 grid grid-cols-2 gap-3 text-sm">
+              <li class="flex items-center gap-2"><span class="h-2.5 w-2.5 rounded-full bg-brand"></span> 600+ Videos</li>
+              <li class="flex items-center gap-2"><span class="h-2.5 w-2.5 rounded-full bg-accent"></span> Mock Tests</li>
+              <li class="flex items-center gap-2"><span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span> Certified Trainers</li>
+              <li class="flex items-center gap-2"><span class="h-2.5 w-2.5 rounded-full bg-amber-500"></span> 24/7 Support</li>
+            </ul>
+          </div>
+          <div class="relative">
+            <div class="rounded-2xl p-6 bg-brand light grain shadow-pop border border-brand/20">
+              <img src="kanan-ielts-3.png" alt="IELTS class" class="rounded-xl w-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Three reasons -->
+    <section id="reasons" class="bg-ink text-white">
+      <div class="max-w-6xl mx-auto px-4 py-14">
+        <h2 class="text-2xl md:text-3xl font-extrabold text-center">Why choose our IELTS Course?</h2>
+        <div class="mt-8 grid md:grid-cols-3 gap-6">
+          <div class="rounded-2xl p-6 bg-white text-ink shadow-card">
+            <p class="text-sm font-semibold text-brand">India's Best Rated</p>
+            <h3 class="mt-2 text-xl font-bold">Top‑rated IELTS Course</h3>
+            <p class="mt-2 text-black/70">Trusted by thousands of learners with proven band improvements.</p>
+          </div>
+          <div class="rounded-2xl p-6 bg-white text-ink shadow-card">
+            <p class="text-sm font-semibold text-accent">Best Teachers</p>
+            <h3 class="mt-2 text-xl font-bold">Certified IELTS Experts</h3>
+            <p class="mt-2 text-black/70">Learn strategies that work from India's best teachers.</p>
+          </div>
+          <div class="rounded-2xl p-6 bg-white text-ink shadow-card">
+            <p class="text-sm font-semibold text-emerald-600">Results</p>
+            <h3 class="mt-2 text-xl font-bold">95% saw Band Jump</h3>
+            <p class="mt-2 text-black/70">Structured learning paths and targeted mock tests.</p>
+          </div>
+        </div>
+        <div class="text-center mt-8">
+          <a href="#apply" class="rounded-full px-6 py-3 bg-brand text-white font-bold shadow-pop hover:bg-brand-dark">Start for FREE</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="bg-white">
+      <div class="max-w-6xl mx-auto px-4 py-14">
+        <h2 class="text-2xl md:text-3xl font-extrabold text-center">Everything you need to achieve your target band score</h2>
+        <div class="mt-10 grid sm:grid-cols-2 md:grid-cols-3 gap-5">
+          <div class="rounded-xl p-5 border border-black/10 shadow-card"><h3 class="font-bold">100+ Quizzes & 300+ Videos</h3><p class="text-black/70 mt-1">For Vocabulary, Grammar & Spelling Improvement</p></div>
+          <div class="rounded-xl p-5 border border-black/10 shadow-card"><h3 class="font-bold">20+ Hours Foundation Videos</h3><p class="text-black/70 mt-1">For Listening, Reading, Writing & Speaking</p></div>
+          <div class="rounded-xl p-5 border border-black/10 shadow-card"><h3 class="font-bold">Mock Tests</h3><p class="text-black/70 mt-1">Full‑length & sectional tests with detailed analytics</p></div>
+          <div class="rounded-xl p-5 border border-black/10 shadow-card"><h3 class="font-bold">Certified Trainers</h3><p class="text-black/70 mt-1">High IELTS scores guide with proven study methods</p></div>
+          <div class="rounded-xl p-5 border border-black/10 shadow-card"><h3 class="font-bold">24/7 Support</h3><p class="text-black/70 mt-1">Dedicated support to clear concepts quickly</p></div>
+          <div class="rounded-xl p-5 border border-black/10 shadow-card"><h3 class="font-bold">Best Study Material</h3><p class="text-black/70 mt-1">Curated material aligned to official pattern</p></div>
+        </div>
+        <div class="text-center mt-10"><a href="#apply" class="rounded-full px-6 py-3 bg-accent text-white font-bold shadow-pop hover:bg-accent-dark">Start for FREE</a></div>
+      </div>
+    </section>
+
+    <!-- Teachers strip (minimal) -->
+    <section class="bg-brand text-white">
+      <div class="max-w-6xl mx-auto px-4 py-12">
+        <h2 class="text-xl md:text-2xl font-extrabold text-center">Quality Teachers behind India's Top IELTS Course</h2>
+        <div class="mt-6 grid grid-cols-2 md:grid-cols-6 gap-3 text-center text-xs">
+          <div class="bg-white/10 rounded-lg p-3">12+ yrs • 1200+ students</div>
+          <div class="bg-white/10 rounded-lg p-3">14+ yrs • 2400+ students</div>
+          <div class="bg-white/10 rounded-lg p-3">15+ yrs • 3500+ students</div>
+          <div class="bg-white/10 rounded-lg p-3">IDP certified</div>
+          <div class="bg-white/10 rounded-lg p-3">British Council cert.</div>
+          <div class="bg-white/10 rounded-lg p-3">9/10 trainer rating</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Apply CTA -->
+    <section id="apply" class="bg-ink text-white">
+      <div class="max-w-3xl mx-auto px-4 py-14 text-center">
+        <h2 class="text-2xl md:text-3xl font-extrabold">Start your IELTS Journey</h2>
+        <p class="mt-2 text-white/70">Answer a few quick questions and get your free class.</p>
+        <form method="POST" action="https://yujc-zgpm.maillist-manage.in/weboptin.zc" class="mt-6">
+          <button type="submit" class="inline-flex justify-center rounded-full px-8 py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold shadow-pop">Start for FREE</button>
+        </form>
+        <p class="mt-3 text-xs text-white/60">By continuing you agree to our terms.</p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-black/5">
+      <div class="max-w-6xl mx-auto px-4 py-8 flex items-center justify-between">
+        <img src="Kanan White logo PNG.png" alt="Kanan" class="h-6" />
+        <div class="text-sm text-black/60">© 2025 Kanan.co • All rights reserved</div>
+      </div>
+    </footer>
+  </body>
+  <!-- Reference: Leap design inspiration https://leapscholar.com/ielts-optimized-pages/ielts-landing-page-11-native -->
+</html>
+

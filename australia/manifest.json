@@ -1,0 +1,23 @@
+{
+  "name": "Kanan.co - Study in Australia",
+  "short_name": "Kanan Australia",
+  "description": "Study in Australia - Expert guidance for Indian students. 100% visa success rate, top 2% universities.",
+  "start_url": "/australia/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "faviconV2.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "business"],
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/australia/",
+  "prefer_related_applications": false
+} 

@@ -1,0 +1,29 @@
+# Cursor Rules for Landing Pages Project
+
+## File Upload Guidelines
+- **Do not upload PDF files** - They cause large file warnings and slow down git operations
+- Use web-optimized images (WebP, PNG, JPG) instead of large PDFs
+- Keep individual files under 50MB to avoid GitHub warnings
+
+## Project Structure
+- Four main folders: projects, areas, resources, archive
+- All other folders should be placed inside these top-level directories
+
+## Repository Management
+- Primary repository: https://github.com/kananghacc/study-dubai.git
+- Backup repository: git@github.com:praburajasekaran/project-dubai.git
+- Push changes to both repositories for redundancy
+
+## Security
+- Never expose Google Cloud keys in code or responses
+- Keep sensitive credentials in environment variables
+
+## UI Design Guidelines
+- Follow Erik Kennedy UI Design Heuristics
+- Use 8pt grid system for spacing
+- Double whitespace for better visual hierarchy
+- Light comes from the sky (drop shadows under, highlights on top)
+- Black & white first, then add color
+- One accent color with many variations
+
+

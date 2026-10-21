@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+package-lock.json
+.npm-cache/
+
+# Build output (already inlined in HTML)
+# dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db

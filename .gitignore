@@ -1,0 +1,164 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Build outputs
+# dist/ - Commented out to allow static HTML deployment
+build/
+.next/
+out/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+# dist
+
+# Gatsby files
+.cache/
+public
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Netlify
+.netlify
+
+# Static deployment - ignore React/Node.js files
+# React source code (not needed for static HTML)
+src/
+apps/
+shared/
+
+# Node.js dependencies (not needed for static HTML)
+package.json
+package-lock.json
+node_modules/
+
+# Build tools (not needed for static HTML)
+build.js
+eslint.config.js
+postcss.config.js
+tailwind.config.js
+tsconfig*.json
+vite.config.ts
+
+# Exception: Allow React app files for ielts-retakers
+!ielts-retakers/package.json
+!ielts-retakers/package-lock.json
+!ielts-retakers/vite.config.ts
+!ielts-retakers/tsconfig.json
+!ielts-retakers/tsconfig.node.json
+!ielts-retakers/tailwind.config.js
+!ielts-retakers/postcss.config.js
+!ielts-retakers/src/
+
+# Exception: Allow Next.js app files for junohub-bootcamp
+!junohub-bootcamp/package.json
+!junohub-bootcamp/package-lock.json
+!junohub-bootcamp/next.config.ts
+!junohub-bootcamp/tsconfig.json
+!junohub-bootcamp/tailwind.config.ts
+!junohub-bootcamp/postcss.config.mjs
+!junohub-bootcamp/eslint.config.mjs
+!junohub-bootcamp/.eslintrc.json
+!junohub-bootcamp/next-env.d.ts
+!junohub-bootcamp/app/
+!junohub-bootcamp/hooks/
+!junohub-bootcamp/lib/
+!junohub-bootcamp/public/
+!junohub-bootcamp/metadata.json
+!junohub-bootcamp/.env.example
+
+# React build outputs (not needed for static HTML)
+# dist/
+build/project-uk/
+dist/

@@ -1,0 +1,8 @@
+{
+  "name": "IELTS Mock Test Landing Page",
+  "description": "High-converting landing page for a free IELTS mock test by Learn With Sam and Ash, powered by Kanan.co.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

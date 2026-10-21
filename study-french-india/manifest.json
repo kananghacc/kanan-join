@@ -1,0 +1,25 @@
+{
+  "name": "Kanan.co - French Course for Indian Students",
+  "short_name": "Kanan.co",
+  "description": "Learn French from A1 to B2 with Kanan. Live classes for Indian students, TEF/TCF prep, India-friendly timings, and a free demo class.",
+  "start_url": "/study-french-india/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#03A653",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/study-french-india/faviconV2.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "language"],
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/study-french-india/",
+  "prefer_related_applications": false
+}
+
+

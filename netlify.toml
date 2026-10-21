@@ -1,0 +1,519 @@
+[build]
+  publish = "dist"
+  command = "./build.sh"
+  base = "."
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Static HTML deployment - serves static HTML from dist directory
+
+# Redirect www.join.kanan.co to join.kanan.co
+[[redirects]]
+  from = "https://www.join.kanan.co/*"
+  to = "https://join.kanan.co/:splat"
+  status = 301
+  force = true
+
+# Disable ielts-new (return 410 Gone)
+[[redirects]]
+  from = "/ielts-new"
+  to = "/404.html"
+  status = 410
+
+[[redirects]]
+  from = "/ielts-new/*"
+  to = "/404.html"
+  status = 410
+
+
+# Redirect root to IELTS Chennai app (main app)
+[[redirects]]
+  from = "/"
+  to = "/ielts-chennai/"
+  status = 200
+
+# Specific redirects for each app
+[[redirects]]
+  from = "/ielts-chennai"
+  to = "/ielts-chennai/"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-vadodara"
+  to = "/ielts-vadodara/"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-online"
+  to = "/ielts-online/"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-online-coaching"
+  to = "/ielts-online-coaching/"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-online-coaching-gcc"
+  to = "/ielts-online-coaching-gcc/"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-online-training"
+  to = "/ielts-online-training/"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-crash-course"
+  to = "/ielts-crash-course/"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-retakers"
+  to = "/ielts-retakers/"
+  status = 200
+
+[[redirects]]
+  from = "/gre"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/gre-coaching-online"
+  to = "/gre-coaching-online/"
+  status = 200
+
+[[redirects]]
+  from = "/gre-coaching-online/*"
+  to = "/gre-coaching-online/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/gre-coaching-chennai"
+  to = "/gre-coaching-chennai/"
+  status = 200
+
+[[redirects]]
+  from = "/gre-coaching-chennai/*"
+  to = "/gre-coaching-chennai/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/gre-coaching-vadodara"
+  to = "/gre-coaching-vadodara/"
+  status = 200
+
+[[redirects]]
+  from = "/gre-coaching-vadodara/*"
+  to = "/gre-coaching-vadodara/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/gmat"
+  to = "/gmat/"
+  status = 200
+
+[[redirects]]
+  from = "/dubai"
+  to = "/dubai/"
+  status = 200
+
+# Duplicate removed
+
+[[redirects]]
+  from = "/us"
+  to = "/us/"
+  status = 200
+
+[[redirects]]
+  from = "/uk"
+  to = "/uk/"
+  status = 200
+
+# Spoken English landing
+[[redirects]]
+  from = "/spoken-english"
+  to = "/spoken-english/"
+  status = 200
+
+[[redirects]]
+  from = "/sat"
+  to = "/sat/"
+  status = 200
+
+[[redirects]]
+  from = "/canada"
+  to = "/canada/"
+  status = 200
+
+# Catch-all redirect for SPA routing within each app
+[[redirects]]
+  from = "/ielts-chennai/*"
+  to = "/ielts-chennai/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-vadodara/*"
+  to = "/ielts-vadodara/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-online/*"
+  to = "/ielts-online/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-online-coaching/*"
+  to = "/ielts-online-coaching/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-online-coaching-gcc/thank-you"
+  to = "/ielts-online-coaching-gcc/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/gcc/thank-you"
+  to = "/ielts-online-coaching-gcc/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-online-coaching-gcc/*"
+  to = "/ielts-online-coaching-gcc/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-online-training/*"
+  to = "/ielts-online-training/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-crash-course/*"
+  to = "/ielts-crash-course/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-retakers/*"
+  to = "/ielts-retakers/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/gre/*"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/gmat/*"
+  to = "/gmat/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/dubai/*"
+  to = "/dubai/index.html"
+  status = 200
+
+# Duplicate removed
+
+[[redirects]]
+  from = "/us/*"
+  to = "/us/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/uk/thank-you"
+  to = "/uk/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/uk/*"
+  to = "/uk/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/spoken-english/*"
+  to = "/spoken-english/index.html"
+  status = 200
+
+# Spoken English - College Students
+[[redirects]]
+  from = "/spoken-english-for-college-students"
+  to = "/spoken-english-for-college-students/"
+  status = 200
+
+[[redirects]]
+  from = "/spoken-english-for-college-students/*"
+  to = "/spoken-english-for-college-students/index.html"
+  status = 200
+
+# Spoken English - Working Professionals
+[[redirects]]
+  from = "/english-course-for-working-professionals"
+  to = "/english-course-for-working-professionals/"
+  status = 200
+
+[[redirects]]
+  from = "/english-course-for-working-professionals/*"
+  to = "/english-course-for-working-professionals/index.html"
+  status = 200
+
+# Study Abroad
+[[redirects]]
+  from = "/study-abroad"
+  to = "/study-abroad/"
+  status = 200
+
+[[redirects]]
+  from = "/study-abroad/*"
+  to = "/study-abroad/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/study-abroad-new"
+  to = "/study-abroad/"
+  status = 200
+
+[[redirects]]
+  from = "/study-abroad-new/*"
+  to = "/study-abroad/index.html"
+  status = 200
+
+# Thank you page redirects
+[[redirects]]
+  from = "/ielts-chennai/thank-you"
+  to = "/ielts-chennai/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-vadodara/thank-you"
+  to = "/ielts-vadodara/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-online/thank-you"
+  to = "/ielts-online/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-online-coaching/thank-you"
+  to = "/ielts-online-coaching/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-online-training/thank-you"
+  to = "/ielts-online-training/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-crash-course/thank-you"
+  to = "/ielts-crash-course/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/ielts-retakers/thank-you"
+  to = "/ielts-retakers/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/us/thank-you"
+  to = "/us/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/sat/thank-you"
+  to = "/sat/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/canada/thank-you"
+  to = "/canada/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/gre-coaching-online/thank-you"
+  to = "/gre-coaching-online/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/gre-coaching-chennai/thank-you"
+  to = "/gre-coaching-chennai/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/gre-coaching-vadodara/thank-you"
+  to = "/gre-coaching-vadodara/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/spoken-english/thank-you"
+  to = "/spoken-english/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/sat/*"
+  to = "/sat/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/canada/*"
+  to = "/canada/index.html"
+  status = 200
+
+# H1B Canada landing
+[[redirects]]
+  from = "/h1b-canada"
+  to = "/h1b-canada/"
+  status = 200
+
+[[redirects]]
+  from = "/h1b-canada/*"
+  to = "/h1b-canada/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/h1b-canada/thank-you"
+  to = "/h1b-canada/thank-you.html"
+  status = 200
+
+# Study French landing
+[[redirects]]
+  from = "/study-french"
+  to = "/study-french/"
+  status = 200
+
+[[redirects]]
+  from = "/study-french/thank-you"
+  to = "/study-french/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/study-french/*"
+  to = "/study-french/index.html"
+  status = 200
+
+# Study French landing for Indian students
+[[redirects]]
+  from = "/study-french-india"
+  to = "/study-french-india/"
+  status = 200
+
+[[redirects]]
+  from = "/study-french-india/thank-you"
+  to = "/study-french-india/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/study-french-india/*"
+  to = "/study-french-india/index.html"
+  status = 200
+
+# Study French Learning
+[[redirects]]
+  from = "/study-french-learning"
+  to = "/study-french-learning/"
+  status = 200
+
+[[redirects]]
+  from = "/study-french-learning/thank-you"
+  to = "/study-french-learning/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/study-french-learning/*"
+  to = "/study-french-learning/index.html"
+  status = 200
+
+# Partners landing
+[[redirects]]
+  from = "/partners"
+  to = "/partners/"
+  status = 200
+
+[[redirects]]
+  from = "/partners/thank-you"
+  to = "/partners/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/partners/*"
+  to = "/partners/index.html"
+  status = 200
+
+# Aspiring Entrepreneurs landing
+[[redirects]]
+  from = "/aspiring-entrepreneurs"
+  to = "/aspiring-entrepreneurs/"
+  status = 200
+
+[[redirects]]
+  from = "/aspiring-entrepreneurs/thank-you"
+  to = "/aspiring-entrepreneurs/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/aspiring-entrepreneurs/*"
+  to = "/aspiring-entrepreneurs/index.html"
+  status = 200
+
+# Samash — IELTS Mock Test (React SPA)
+[[redirects]]
+  from = "/samash"
+  to = "/samash/"
+  status = 200
+
+[[redirects]]
+  from = "/samash/*"
+  to = "/samash/index.html"
+  status = 200
+
+# Germany landing
+[[redirects]]
+  from = "/germany"
+  to = "/germany/"
+  status = 200
+
+[[redirects]]
+  from = "/germany/thank-you"
+  to = "/germany/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/germany/*"
+  to = "/germany/index.html"
+  status = 200
+
+# JunoHub Bootcamp — static export landing page
+[[redirects]]
+  from = "/junohub-bootcamp"
+  to = "/junohub-bootcamp/"
+  status = 200
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Form handling
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
