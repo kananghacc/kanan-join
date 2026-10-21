@@ -11,6 +11,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/h1b-canada/">
     <title>H1B to Canada — A Real, Fast-Track Path to Stability | Kanan.co</title>
     <meta name="description" content="Move your career, family, and life forward with Canada's new open work permit program for H-1B holders. End the uncertainty. Build a stable future in Canada.">
     <meta name="robots" content="noindex, nofollow" />
@@ -159,6 +160,7 @@
         }
     </style>
     <script defer src="https://smoky-nuthatch.pikapod.net/script.js" data-website-id="7c6e1e05-f8f8-4d33-ba6d-c1e60e7cba9f"></script>
+    <link rel="stylesheet" href="/shared/kanan-lead-form.css" />
 </head>
 <body class="min-h-screen bg-white font-body">
     <!-- Google Tag Manager (noscript) -->
@@ -1075,20 +1077,34 @@
                 </button>
             </div>
             
-            <!-- H1B Canada Form (Tally embed) -->
+            <!-- H1B Canada Form (CRM) -->
             <div class="w-full">
-                <div id="form-container-modal" style="border-radius: 8px; padding: 24px; background: white; height: 600px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-                    <iframe data-tally-src="https://tally.so/embed/me49yl?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="387" frameborder="0" marginheight="0" marginwidth="0" title="H1B_Canada_Consultation"></iframe>
-                    <script>
-                        var d=document,w="https://tally.so/widgets/embed.js",v=function(){
-                          if(typeof Tally!=="undefined"){Tally.loadEmbeds()}else{d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach(function(e){e.src=e.dataset.tallySrc})}
-                        };
-                        if(typeof Tally!=="undefined") v();
-                        else if(d.querySelector('script[src="'+w+'"]')==null){
-                          var s=d.createElement("script");
-                          s.src=w; s.onload=v; s.onerror=v; d.body.appendChild(s);
-                        }
-                    </script>
+                <div id="form-container-modal" style="border-radius: 8px; padding: 24px; background: white; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                    <form class="kanan-lead-form kanan-lead-form--brand" data-kanan-lead-form novalidate
+                      data-thank-you="/h1b-canada/thank-you.html"
+                      data-utm-source-url="h1b-canada"
+                      data-utm-campaign="H1B_Canada_Consultation"
+                      data-utm-category="paid_lead"
+                      data-lead-source="Google">
+                      <div class="kanan-field">
+                        <label for="h1b-lead-name">Full name</label>
+                        <input id="h1b-lead-name" name="name" type="text" required autocomplete="name" placeholder="Your full name" />
+                      </div>
+                      <div class="kanan-field">
+                        <label for="h1b-lead-mobile">Mobile number</label>
+                        <input id="h1b-lead-mobile" name="mobile_number" type="tel" required autocomplete="tel" placeholder="+1 234 567 8900" />
+                      </div>
+                      <div class="kanan-field">
+                        <label for="h1b-lead-email">Email</label>
+                        <input id="h1b-lead-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com" />
+                      </div>
+                      <div class="kanan-field">
+                        <label for="h1b-lead-remarks">Brief background / question</label>
+                        <input id="h1b-lead-remarks" name="remarks" type="text" required placeholder="e.g. H1B expiry, PR pathway" />
+                      </div>
+                      <button type="submit" class="kanan-submit-btn">Check eligibility</button>
+                      <div class="kanan-form-error" role="alert"></div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -1213,5 +1229,7 @@
             </a>
         </div>
     </div>
+    <script src="/shared/kanan-crm-config.js"></script>
+    <script src="/shared/kanan-lead-form.js"></script>
 </body>
 </html>

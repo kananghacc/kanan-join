@@ -1,0 +1,136 @@
+/* Kanan CRM lead forms — shared across study-abroad country pages */
+
+.kanan-lead-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  text-align: left;
+}
+
+.kanan-form-heading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.25rem;
+  line-height: 1.3;
+}
+
+.kanan-form-subheading {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0 0 1.25rem;
+  line-height: 1.45;
+}
+
+.kanan-lead-form .kanan-field,
+.kanan-lead-form > div:not(.kanan-form-error) {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.kanan-lead-form label {
+  display: block !important;
+  width: 100% !important;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.375rem;
+  line-height: 1.35;
+}
+
+.kanan-lead-form input,
+.kanan-lead-form select,
+.kanan-lead-form textarea {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: #111827;
+  background: #fff;
+  outline: none;
+  box-sizing: border-box;
+  appearance: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.kanan-lead-form input::placeholder,
+.kanan-lead-form textarea::placeholder {
+  color: #9ca3af;
+}
+
+.kanan-lead-form input:focus,
+.kanan-lead-form select:focus,
+.kanan-lead-form textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+}
+
+.kanan-lead-form .kanan-submit-btn,
+.kanan-lead-form button[type='submit'] {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #fff;
+  background: #2563eb;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+
+.kanan-lead-form .kanan-submit-btn:hover,
+.kanan-lead-form button[type='submit']:hover {
+  background: #1d4ed8;
+}
+
+.kanan-lead-form .kanan-submit-btn:disabled,
+.kanan-lead-form button[type='submit']:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.kanan-lead-form .kanan-form-error {
+  display: none;
+  font-size: 0.875rem;
+  color: #b91c1c;
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 0.5rem;
+}
+
+.kanan-lead-form .kanan-form-error.show {
+  display: block;
+}
+
+/* Brand accent variant (e.g. h1b-canada) */
+.kanan-lead-form.kanan-lead-form--brand .kanan-submit-btn,
+.kanan-lead-form.kanan-lead-form--brand button[type='submit'] {
+  background: #03a653;
+}
+
+.kanan-lead-form.kanan-lead-form--brand .kanan-submit-btn:hover,
+.kanan-lead-form.kanan-lead-form--brand button[type='submit']:hover {
+  background: #028a45;
+}
+
+.kanan-lead-form.kanan-lead-form--brand input:focus,
+.kanan-lead-form.kanan-lead-form--brand select:focus,
+.kanan-lead-form.kanan-lead-form--brand textarea:focus {
+  border-color: #03a653;
+  box-shadow: 0 0 0 3px rgba(3, 166, 83, 0.18);
+}

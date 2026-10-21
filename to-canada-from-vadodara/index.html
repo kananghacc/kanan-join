@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/to-canada-from-vadodara/">
     <title>Study in Canada - Free Guidance for Indian Students | Kanan.co</title>
     <meta name="description" content="End-to-end free guidance for Indian students studying in Canada. From college selection to visa approval. Trusted by 100,000+ learners already in Canada.">
     <meta name="keywords" content="study in canada, canada student visa, canadian colleges, indian students canada, study abroad canada">
@@ -32,7 +33,6 @@
     <link rel="dns-prefetch" href="https://connect.facebook.net">
     <link rel="dns-prefetch" href="https://www.clarity.ms">
     <link rel="dns-prefetch" href="https://cdn-in.pagesense.io">
-    <link rel="dns-prefetch" href="https://tally.so">
     <link rel="dns-prefetch" href="https://my.hellobar.com">
     <link rel="dns-prefetch" href="https://cdn.taboola.com">
 
@@ -154,6 +154,7 @@
     <!-- Tailwind CSS CDN - Deferred to prevent render-blocking -->
     <script src="https://cdn.tailwindcss.com" defer></script>
     <script defer src="https://smoky-nuthatch.pikapod.net/script.js" data-website-id="7c6e1e05-f8f8-4d33-ba6d-c1e60e7cba9f"></script>
+    <link rel="stylesheet" href="/shared/kanan-lead-form.css" />
 </head>
 <body class="min-h-screen bg-white font-body">
     <!-- Google Tag Manager (noscript) -->
@@ -1154,18 +1155,45 @@
     <!-- Consultation Form Modal -->
     <div id="consultation-modal" class="modal">
         <div class="modal-content">
-            <div class="flex justify-between items-center mb-6">
-                
-                <button onclick="closeConsultationForm()" class="text-gray-400 hover:text-gray-600">
+            <div class="flex justify-between items-start gap-4 mb-4">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900 font-heading">Book your free consultation</h2>
+                    <p class="text-sm text-gray-600 mt-1 font-body">Our counsellors in Vadodara will reach out within 24 hours.</p>
+                </div>
+                <button type="button" onclick="closeConsultationForm()" class="text-gray-400 hover:text-gray-600 shrink-0" aria-label="Close">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
             </div>
             
-            <!-- Tally Embed Form -->
+            <!-- CRM Lead Form -->
             <div class="w-full">
-                <iframe data-tally-src="https://tally.so/embed/0Qrb6N?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="449" frameborder="0" marginheight="0" marginwidth="0" title="Study In Canada"></iframe>
+                <form class="kanan-lead-form" data-kanan-lead-form novalidate
+                  data-thank-you="/to-canada-from-vadodara/thank-you.html"
+                  data-utm-source-url="to-canada-from-vadodara"
+                  data-utm-campaign="Study_In_Canada_Vadodara"
+                  data-utm-category="paid_lead"
+                  data-lead-source="Google">
+                  <div class="kanan-field">
+                    <label for="vadodara-lead-name">Full name</label>
+                    <input id="vadodara-lead-name" name="name" type="text" required autocomplete="name" placeholder="Your full name" />
+                  </div>
+                  <div class="kanan-field">
+                    <label for="vadodara-lead-mobile">Mobile number</label>
+                    <input id="vadodara-lead-mobile" name="mobile_number" type="tel" required autocomplete="tel" placeholder="+91 98765 43210" />
+                  </div>
+                  <div class="kanan-field">
+                    <label for="vadodara-lead-email">Email</label>
+                    <input id="vadodara-lead-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com" />
+                  </div>
+                  <div class="kanan-field">
+                    <label for="vadodara-lead-remarks">Preferred intake / program interest</label>
+                    <input id="vadodara-lead-remarks" name="remarks" type="text" required placeholder="e.g. Fall 2026, PG Diploma" />
+                  </div>
+                  <button type="submit" class="kanan-submit-btn">Book free consultation</button>
+                  <div class="kanan-form-error" role="alert"></div>
+                </form>
             </div>
         </div>
     </div>
@@ -1578,21 +1606,6 @@
             const modal = document.getElementById('consultation-modal');
             modal.classList.add('show');
             document.body.style.overflow = 'hidden';
-            // Lazy-load Tally only when modal opens
-            const tallyIframe = document.querySelector('iframe[data-tally-src]');
-            if (tallyIframe && !tallyIframe.src) {
-                tallyIframe.src = tallyIframe.dataset.tallySrc;
-            }
-            if (typeof Tally === 'undefined' && !document.querySelector('script[src="https://tally.so/widgets/embed.js"]')) {
-                const s = document.createElement('script');
-                s.src = 'https://tally.so/widgets/embed.js';
-                s.defer = true;
-                s.onload = function() { if (window.Tally && window.Tally.loadEmbeds) { window.Tally.loadEmbeds(); } };
-                s.onerror = s.onload;
-                document.body.appendChild(s);
-            } else if (window.Tally && window.Tally.loadEmbeds) {
-                window.Tally.loadEmbeds();
-            }
         }
         
         function closeConsultationForm() {
@@ -1677,5 +1690,7 @@
         });
     </script>
     <!-- End Google Tag Manager -->
+    <script src="/shared/kanan-crm-config.js"></script>
+    <script src="/shared/kanan-lead-form.js"></script>
 </body>
 </html>

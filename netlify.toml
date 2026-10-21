@@ -11,6 +11,9 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
+[functions.submit-lead]
+  included_files = ["shared/submit-lead-core.js"]
+
 # Static HTML deployment - serves static HTML from dist directory
 
 # Redirect www.join.kanan.co to join.kanan.co
@@ -122,19 +125,19 @@
 [[redirects]]
   from = "/dubai"
   to = "/dubai/"
-  status = 200
+  status = 301
 
 # Duplicate removed
 
 [[redirects]]
   from = "/us"
   to = "/us/"
-  status = 200
+  status = 301
 
 [[redirects]]
   from = "/uk"
   to = "/uk/"
-  status = 200
+  status = 301
 
 # Spoken English landing
 [[redirects]]
@@ -150,7 +153,17 @@
 [[redirects]]
   from = "/canada"
   to = "/canada/"
-  status = 200
+  status = 301
+
+[[redirects]]
+  from = "/australia"
+  to = "/australia/"
+  status = 301
+
+[[redirects]]
+  from = "/to-canada-from-vadodara"
+  to = "/to-canada-from-vadodara/"
+  status = 301
 
 # Catch-all redirect for SPA routing within each app
 [[redirects]]
@@ -368,7 +381,7 @@
 [[redirects]]
   from = "/h1b-canada"
   to = "/h1b-canada/"
-  status = 200
+  status = 301
 
 [[redirects]]
   from = "/h1b-canada/*"
@@ -475,7 +488,7 @@
 [[redirects]]
   from = "/germany"
   to = "/germany/"
-  status = 200
+  status = 301
 
 [[redirects]]
   from = "/germany/thank-you"

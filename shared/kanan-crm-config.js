@@ -1,0 +1,1 @@
+window.KANAN_CRM_SUBMIT_URL = '__CRM_SUBMIT_URL__';
