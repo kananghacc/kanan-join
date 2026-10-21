@@ -83,18 +83,20 @@ for app in "${REACT_APPS[@]}"; do
 
   # Copy the built files to main dist folder
   echo "➡️  Copying built files to dist/$app"
-  mkdir -p "dist/$app"
   # Next.js export uses out/ directory, Vite uses dist/
   OUTPUT_DIR="dist"
   if [ -d "$app/out" ]; then
     OUTPUT_DIR="out"
   fi
-  rsync -a --delete "$app/$OUTPUT_DIR/" "dist/$app/"
+  rm -rf "dist/$app"
+  mkdir -p "dist/$app"
+  cp -a "$app/$OUTPUT_DIR/." "dist/$app/"
 
   if [ "$app" = "junohub-bootcamp" ] && [ -d "$app/$OUTPUT_DIR/adult" ]; then
     echo "➡️  Publishing JunoHub adult page to dist/junohub-ai-for-pros"
+    rm -rf "dist/junohub-ai-for-pros"
     mkdir -p "dist/junohub-ai-for-pros"
-    rsync -a --delete "$app/$OUTPUT_DIR/adult/" "dist/junohub-ai-for-pros/"
+    cp -a "$app/$OUTPUT_DIR/adult/." "dist/junohub-ai-for-pros/"
   fi
 
   # Inject Umami tracking into React app's built index.html
@@ -115,9 +117,10 @@ fi
 for d in "${LANDING_DIRS[@]}"; do
   if [ -d "$d" ]; then
     echo "➡️  Building dist/$d"
+    rm -rf "dist/$d"
     mkdir -p "dist/$d"
     # Mirror the entire folder (includes index.html, thank-you.html, assets, images, etc.)
-    rsync -a --delete "$d/" "dist/$d/"
+    cp -a "$d/." "dist/$d/"
   else
     echo "⚠️  Skipping $d (directory not found)"
   fi
