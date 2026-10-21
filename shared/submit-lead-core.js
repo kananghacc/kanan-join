@@ -3,6 +3,8 @@
  * Secrets stay in process.env — never ship CRM_API_KEY to the browser.
  */
 
+const { validateLeadContact } = require('./kanan-lead-validation.js');
+
 const DEFAULTS = {
   CRM_LEAD_URL:
     'https://p3uqhxbhjj.us-east-1.awsapprunner.com/api/v1/tenants/5e8f573d-5ff0-4c2a-a44d-e7e3233eb388/workspaces/f58412eb-11b0-4c46-ba14-1c0bb0d9c802/entities/lead',
@@ -18,10 +20,22 @@ const corsHeaders = {
   'Content-Type': 'application/json',
 };
 
+/** Function URL CORS + handler ACAO duplicates break browser CORS checks. */
+const isLambdaRuntime = Boolean(
+  process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.AWS_EXECUTION_ENV
+);
+
+function responseHeaders() {
+  if (isLambdaRuntime) {
+    return { 'Content-Type': 'application/json' };
+  }
+  return corsHeaders;
+}
+
 function jsonResponse(statusCode, body) {
   return {
     statusCode,
-    headers: corsHeaders,
+    headers: responseHeaders(),
     body: JSON.stringify(body),
   };
 }
@@ -68,8 +82,8 @@ async function createLead(data) {
   }
 
   const name = String(data.name || '').trim();
-  const email = String(data.email || '').trim();
-  const mobile_number = String(data.mobile_number || '').trim();
+  let email = String(data.email || '').trim();
+  let mobile_number = String(data.mobile_number || '').trim();
   const remarks = String(data.remarks || '').trim();
 
   if (!name || !email || !mobile_number || !remarks) {
@@ -77,6 +91,13 @@ async function createLead(data) {
       error: 'name, email, mobile_number, and remarks are required',
     });
   }
+
+  const contact = validateLeadContact(email, mobile_number);
+  if (!contact.ok) {
+    return jsonResponse(400, { error: contact.error });
+  }
+  email = contact.email;
+  mobile_number = contact.mobile_number;
 
   const payload = {
     organisation_id:
@@ -139,7 +160,7 @@ async function handleSubmitLead(event) {
   const method = getHttpMethod(event);
 
   if (method === 'OPTIONS') {
-    return { statusCode: 204, headers: corsHeaders, body: '' };
+    return { statusCode: 204, headers: responseHeaders(), body: '' };
   }
 
   if (method !== 'POST') {

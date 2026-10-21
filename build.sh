@@ -51,7 +51,7 @@ mkdir -p dist
 echo "➡️  Copying public shared assets to dist/shared"
 rm -rf dist/shared
 mkdir -p dist/shared
-cp shared/kanan-crm-config.js shared/kanan-lead-form.js shared/kanan-lead-form.css dist/shared/
+cp shared/kanan-crm-config.js shared/kanan-lead-validation.js shared/kanan-lead-form.js shared/kanan-lead-form.css dist/shared/
 
 # Build React apps first
 for app in "${REACT_APPS[@]}"; do

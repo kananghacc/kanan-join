@@ -12,7 +12,7 @@
   node_bundler = "esbuild"
 
 [functions.submit-lead]
-  included_files = ["shared/submit-lead-core.js"]
+  included_files = ["shared/submit-lead-core.js", "shared/kanan-lead-validation.js"]
 
 # Static HTML deployment - serves static HTML from dist directory
 

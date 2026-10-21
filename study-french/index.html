@@ -1580,7 +1580,7 @@
     </div>
   </footer>
 
-
+  <script src="/shared/kanan-lead-validation.js"></script>
   <script>
     function openConsultationForm(selectedPackage = '') {
       if (window.innerWidth < 768) {
@@ -1648,6 +1648,16 @@
       if (!name || !email || !mobile_number || !remarks) {
         setFormError(form, 'Please fill in all fields.');
         return;
+      }
+
+      if (window.KananLeadValidation && window.KananLeadValidation.validateLeadContact) {
+        var validated = window.KananLeadValidation.validateLeadContact(email, mobile_number);
+        if (!validated.ok) {
+          setFormError(form, validated.error);
+          return;
+        }
+        email = validated.email;
+        mobile_number = validated.mobile_number;
       }
 
       if (submitBtn) {

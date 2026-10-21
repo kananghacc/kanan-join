@@ -11,6 +11,7 @@ PAGES=(
   "us:us"
   "germany:germany"
   "dubai:dubai"
+  "study-french-learning:study-french-learning"
   "h1b-canada:h1b-canada"
   "to-canada-from-vadodara:to-canada-from-vadodara"
 )
@@ -29,6 +30,10 @@ for entry in "${PAGES[@]}"; do
   fi
   if ! grep -q 'data-kanan-lead-form' "$PAGE"; then
     echo "Expected data-kanan-lead-form in $PAGE" >&2
+    exit 1
+  fi
+  if ! grep -q '/shared/kanan-lead-validation.js' "$PAGE"; then
+    echo "Expected shared kanan-lead-validation.js in $PAGE" >&2
     exit 1
   fi
   if ! grep -q '/shared/kanan-lead-form.js' "$PAGE"; then

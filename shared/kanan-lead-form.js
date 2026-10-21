@@ -44,6 +44,17 @@
       return;
     }
 
+    var contactCheck = window.KananLeadValidation && window.KananLeadValidation.validateLeadContact;
+    if (contactCheck) {
+      var validated = contactCheck(email, mobile_number);
+      if (!validated.ok) {
+        setFormError(form, validated.error);
+        return;
+      }
+      email = validated.email;
+      mobile_number = validated.mobile_number;
+    }
+
     var payload = {
       name: name,
       email: email,
