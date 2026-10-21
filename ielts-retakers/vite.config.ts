@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   base: '/ielts-retakers/',
   build: {
-    outDir: '../dist/ielts-retakers',
+    outDir: 'dist',
     emptyOutDir: true,
   },
 })
