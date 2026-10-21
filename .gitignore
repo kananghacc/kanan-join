@@ -158,6 +158,16 @@ vite.config.ts
 !junohub-bootcamp/metadata.json
 !junohub-bootcamp/.env.example
 
+# Exception: Allow React app files for samash
+!samash/package.json
+!samash/package-lock.json
+!samash/vite.config.ts
+!samash/tsconfig.json
+!samash/tailwind.config.js
+!samash/postcss.config.js
+!samash/src/
+!samash/public/
+
 # React build outputs (not needed for static HTML)
 # dist/
 build/project-uk/

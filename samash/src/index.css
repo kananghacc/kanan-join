@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: var(--color-canvas);
+}
+
+.hero-light-field {
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 88%, rgba(255, 58, 58, 0.46), transparent 50%),
+    radial-gradient(circle at 50% 58%, rgba(255, 96, 96, 0.18), transparent 44%),
+    linear-gradient(180deg, rgba(11, 58, 102, 0.98), rgba(38, 94, 142, 0.34) 44%, rgba(255, 247, 247, 0.66) 100%);
+}
+
+.hero-light-field::before,
+.hero-light-field::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-light-field::before {
+  background:
+    linear-gradient(180deg, rgba(11, 58, 102, 0.92) 0%, rgba(11, 58, 102, 0.48) 30%, rgba(244, 248, 255, 0.12) 64%, rgba(244, 248, 255, 0.04) 100%),
+    radial-gradient(circle at 50% 34%, rgba(38, 94, 142, 0.12), rgba(11, 58, 102, 0.24) 76%);
+}
+
+.hero-light-field::after {
+  background: linear-gradient(90deg, rgba(11, 58, 102, 0.86) 0%, rgba(11, 58, 102, 0.18) 12%, rgba(11, 58, 102, 0) 50%, rgba(11, 58, 102, 0.18) 88%, rgba(11, 58, 102, 0.86) 100%);
+}
+
+.hero-gradient-bars {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(0px, 0.12vw, 2px);
+  transform: translateZ(0);
+}
+
+.hero-gradient-bar {
+  position: relative;
+  flex: var(--bar-width) 1 0;
+  max-width: none;
+  height: var(--bar-height);
+  transform-origin: bottom;
+  background:
+    linear-gradient(180deg, rgba(244, 248, 255, 0) 0%, rgba(88, 128, 170, 0.18) 18%, rgba(255, 96, 96, 0.38) 44%, rgba(226, 57, 57, 0.72) 72%, rgba(255, 58, 58, 0.92) 100%);
+  box-shadow:
+    0 0 42px rgba(255, 58, 0, 0.18),
+    0 0 82px rgba(255, 58, 0, 0.12),
+    inset 0 0 32px rgba(255, 155, 96, 0.14);
+  opacity: var(--bar-opacity);
+  mix-blend-mode: plus-lighter;
+  filter: hue-rotate(var(--bar-hue));
+  animation: heroGradientBarPulse 3.1s ease-in-out infinite alternate;
+  animation-delay: var(--bar-delay);
+}
+
+.hero-gradient-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0 34%;
+  background: linear-gradient(180deg, transparent 8%, rgba(255, 105, 52, 0.3) 56%, rgba(255, 204, 168, 0.52) 100%);
+  box-shadow: 0 0 28px rgba(255, 116, 58, 0.14);
+}
+
+.hero-gradient-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(11, 58, 102, 0.14), transparent 28%, transparent 72%, rgba(11, 58, 102, 0.14)),
+    linear-gradient(180deg, transparent 0%, rgba(255, 126, 57, 0.14) 76%, rgba(255, 85, 22, 0.34) 100%);
+}
+
+.hero-gradient-bar:nth-child(odd) {
+  background:
+    linear-gradient(180deg, rgba(244, 248, 255, 0) 0%, rgba(72, 116, 158, 0.14) 24%, rgba(255, 74, 74, 0.5) 62%, rgba(226, 41, 41, 0.88) 100%);
+}
+
+.hero-gradient-bar:nth-child(4n) {
+  background:
+    linear-gradient(180deg, rgba(244, 248, 255, 0) 0%, rgba(72, 116, 158, 0.18) 26%, rgba(225, 59, 59, 0.78) 72%, rgba(255, 86, 86, 0.95) 100%);
+}
+
+@keyframes heroGradientBarPulse {
+  from {
+    transform: scaleY(calc(1 - var(--bar-pulse-depth)));
+    filter: saturate(0.86) brightness(0.86);
+  }
+  to {
+    transform: scaleY(calc(1 + var(--bar-pulse-depth)));
+    filter: saturate(1.22) brightness(1.18);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-gradient-bar {
+    min-width: clamp(22px, 8vw, 36px);
+  }
+
+  .hero-light-field::before {
+    background:
+      linear-gradient(180deg, rgba(11, 58, 102, 0.94) 0%, rgba(11, 58, 102, 0.58) 32%, rgba(244, 248, 255, 0.14) 68%, rgba(244, 248, 255, 0.08) 100%),
+      radial-gradient(circle at 50% 44%, rgba(38, 94, 142, 0.14), rgba(11, 58, 102, 0.3) 76%);
+  }
+}
