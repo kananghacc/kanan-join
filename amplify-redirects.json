@@ -16,5 +16,11 @@
     "target": "/study-french-learning/thank-you.html",
     "status": "200",
     "condition": null
+  },
+  {
+    "source": "/",
+    "target": "/ielts-chennai/",
+    "status": "200",
+    "condition": null
   }
 ]

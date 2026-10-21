@@ -38,8 +38,8 @@ Do not commit `.env` (gitignored).
 
 See [AMPLIFY_SETUP.md](../AMPLIFY_SETUP.md):
 
-1. `sam deploy` the Lambda with `CRM_API_KEY`
-2. Set Amplify Hosting env `CRM_SUBMIT_URL` = Function URL
+1. Deploy Lambda with CRM secrets (see [AMPLIFY_SETUP.md](../AMPLIFY_SETUP.md))
+2. Amplify Hosting env: **`CRM_SUBMIT_URL` only** — remove `CRM_API_KEY` and other CRM_* vars from Amplify
 3. Add thank-you rewrites from `amplify-redirects.json`
 
 ## Form → CRM field mapping

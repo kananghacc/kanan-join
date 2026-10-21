@@ -113,6 +113,37 @@ if [ -f "index.html" ]; then
   cp "index.html" "dist/index.html"
 fi
 
+# Root index.html references these assets with relative paths (logo, hero, avatars, trainers).
+# Amplify/Netlify publish only dist/, so they must be copied or images 404 on the root page.
+echo "➡️  Copying root-level static assets"
+ROOT_FILES=(
+  "404.html"
+  "faviconV2.png"
+  "kanan-logo.svg"
+  "kanan-ielts-3.png"
+  "kanan-ielts-3-optimized.webp"
+  "manifest.json"
+  "robots.txt"
+  "sitemap.xml"
+  "_redirects"
+)
+for f in "${ROOT_FILES[@]}"; do
+  if [ -f "$f" ]; then
+    cp "$f" "dist/$f"
+  fi
+done
+
+ROOT_ASSET_DIRS=(
+  "testimonial-images"
+  "trainer-images"
+)
+for d in "${ROOT_ASSET_DIRS[@]}"; do
+  if [ -d "$d" ]; then
+    rm -rf "dist/$d"
+    cp -a "$d" "dist/$d"
+  fi
+done
+
 # Build static HTML landing pages
 for d in "${LANDING_DIRS[@]}"; do
   if [ -d "$d" ]; then

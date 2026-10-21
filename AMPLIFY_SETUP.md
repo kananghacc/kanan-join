@@ -31,13 +31,23 @@ Lambda environment variables (set via SAM parameters):
 
 1. Amplify Console → Create app → Host web app → connect [kananghacc/kanan-join](https://github.com/kananghacc/kanan-join) (or your fork).
 2. Amplify will pick up [`amplify.yml`](amplify.yml) (`./build.sh` → publish `dist/`).
-3. **Hosting → Environment variables → Manage variables**, add:
+3. **Hosting → Environment variables** — use **only** `CRM_SUBMIT_URL` on Amplify:
 
-| Variable | Value | Notes |
-| --- | --- | --- |
-| `CRM_SUBMIT_URL` | Lambda Function URL from step 1 | Public URL only — **not** the API key |
+| Action | Variable |
+| --- | --- |
+| **Remove** (if present) | `CRM_API_KEY`, `CRM_LEAD_URL`, `CRM_ORGANISATION_ID`, `CRM_BRANCH_ID`, `CRM_OWNER_ID` |
+| **Set** (all branches) | `CRM_SUBMIT_URL` = Lambda Function URL from step 1 |
 
-Do **not** put `CRM_API_KEY` in Amplify Hosting env vars for this static site (build artifacts can expose build env in some setups; the key belongs on Lambda).
+`CRM_SUBMIT_URL` is public (not a secret). CRM credentials stay on **Lambda** only.
+
+**CLI (BrainValley / Amplify account):** add `AMPLIFY_APP_ID` to `.env`, then:
+
+```bash
+chmod +x scripts/apply-amplify-crm-env.sh
+./scripts/apply-amplify-crm-env.sh
+```
+
+Default region `us-east-1`, branch `main` — override with `AMPLIFY_REGION` / `AMPLIFY_BRANCH`.
 
 4. Import redirects from [`amplify-redirects.json`](amplify-redirects.json):  
    **Hosting → Rewrites and redirects** → add the thank-you `200` rules (especially `/study-french/thank-you` → `/study-french/thank-you.html`).
