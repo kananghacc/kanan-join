@@ -6,6 +6,11 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# Bundle shared/submit-lead-core.js into the CRM proxy function
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
 # Static HTML deployment - serves static HTML from dist directory
 
 # Redirect www.join.kanan.co to join.kanan.co

@@ -1,0 +1,33 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - node -v
+        - npm -v || true
+    build:
+      commands:
+        - chmod +x build.sh scripts/add-umami.sh 2>/dev/null || true
+        - ./build.sh
+        # Inject Lambda Function URL into study-french (public URL only — never CRM_API_KEY)
+        - |
+          if [ -n "${CRM_SUBMIT_URL:-}" ]; then
+            echo "Injecting CRM_SUBMIT_URL into study-french"
+            ESCAPED_URL=$(printf '%s' "$CRM_SUBMIT_URL" | sed 's/[&/\]/\\&/g')
+            sed -i.bak "s|__CRM_SUBMIT_URL__|${ESCAPED_URL}|g" dist/study-french/index.html
+            rm -f dist/study-french/index.html.bak
+          else
+            echo "CRM_SUBMIT_URL not set — form will POST to /api/submit-lead (Netlify or same-origin proxy)"
+            sed -i.bak "s|__CRM_SUBMIT_URL__||g" dist/study-french/index.html
+            rm -f dist/study-french/index.html.bak
+          fi
+  artifacts:
+    baseDirectory: dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+      - ielts-retakers/node_modules/**/*
+      - junohub-bootcamp/node_modules/**/*
+      - samash/node_modules/**/*

@@ -1,36 +1,24 @@
 # Study French — Direct CRM Lead Submit
 
-The landing page posts leads to the CRM via a Netlify Function instead of Tally/Pabbly.
+Form posts go to a server-side proxy (never put `CRM_API_KEY` in page JavaScript).
 
 ## Flow
 
 1. User fills the native form on `/study-french/`
-2. Browser `POST`s to `/api/submit-lead`
-3. Netlify function [`netlify/functions/submit-lead.js`](../netlify/functions/submit-lead.js) forwards to the CRM lead API with `x-api-key`
-4. On success, user is redirected to `/study-french/thank-you`
+2. Browser POSTs JSON `{ name, email, mobile_number, remarks }`
+3. Proxy forwards to the CRM lead API with `x-api-key`
+4. On success → `/study-french/thank-you`
 
-## Required Netlify environment variable
+## Endpoints
 
-Set this in the Netlify site settings (**Site configuration → Environment variables**):
-
-| Variable | Required | Description |
-| --- | --- | --- |
-| `CRM_API_KEY` | Yes | Value for the CRM `x-api-key` header |
-
-### Optional overrides
-
-Defaults match the French Course Canada Pabbly workflow. Override only if the CRM IDs change:
-
-| Variable | Default purpose |
+| Platform | Proxy |
 | --- | --- |
-| `CRM_LEAD_URL` | Full CRM lead `POST` URL |
-| `CRM_ORGANISATION_ID` | `organisation_id` in payload |
-| `CRM_BRANCH_ID` | `branch_id` in payload |
-| `CRM_OWNER_ID` | `owner_id` in payload |
+| **Netlify** | `POST /api/submit-lead` → [`netlify/functions/submit-lead.js`](../netlify/functions/submit-lead.js) |
+| **Amplify** | `POST` Lambda Function URL (injected as `CRM_SUBMIT_URL` at build) → [`infrastructure/submit-lead`](../infrastructure/submit-lead) |
 
-## Local testing
+Shared CRM logic: [`shared/submit-lead-core.js`](../shared/submit-lead-core.js).
 
-Create a `.env` at the repo root (gitignored) with:
+## Netlify env (local `.env` or Netlify dashboard)
 
 ```bash
 CRM_API_KEY=...
@@ -40,13 +28,19 @@ CRM_BRANCH_ID=...
 CRM_OWNER_ID=...
 ```
 
-Then:
-
 ```bash
 npx netlify dev
 ```
 
-Netlify CLI loads `.env` automatically for functions. Do not commit `.env`.
+Do not commit `.env` (gitignored).
+
+## Amplify
+
+See [AMPLIFY_SETUP.md](../AMPLIFY_SETUP.md):
+
+1. `sam deploy` the Lambda with `CRM_API_KEY`
+2. Set Amplify Hosting env `CRM_SUBMIT_URL` = Function URL
+3. Add thank-you rewrites from `amplify-redirects.json`
 
 ## Form → CRM field mapping
 
@@ -57,4 +51,4 @@ Netlify CLI loads `.env` automatically for functions. Do not commit `.env`.
 | Enter your Email ID | `email` |
 | Educational qualification | `remarks` |
 
-Fixed UTM fields: `utm_source=Google`, `utm_category=paid_lead`, `utm_campaign=French_Course_Leads`, `lead_source=Google`, `utm_source_url=study-french`.
+Fixed UTMs: `utm_source=Google`, `utm_category=paid_lead`, `utm_campaign=French_Course_Leads`, `lead_source=Google`, `utm_source_url=study-french`.

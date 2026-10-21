@@ -1,0 +1,20 @@
+[
+  {
+    "source": "/study-french/thank-you",
+    "target": "/study-french/thank-you.html",
+    "status": "200",
+    "condition": null
+  },
+  {
+    "source": "/study-french-india/thank-you",
+    "target": "/study-french-india/thank-you.html",
+    "status": "200",
+    "condition": null
+  },
+  {
+    "source": "/study-french-learning/thank-you",
+    "target": "/study-french-learning/thank-you.html",
+    "status": "200",
+    "condition": null
+  }
+]

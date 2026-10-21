@@ -1,0 +1,69 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: CRM lead submit for study-french (Amplify-compatible Lambda Function URL)
+
+Parameters:
+  CrmApiKey:
+    Type: String
+    NoEcho: true
+    Description: CRM x-api-key (set via sam deploy parameter or Amplify/CI secret)
+  CrmLeadUrl:
+    Type: String
+    Default: 'https://p3uqhxbhjj.us-east-1.awsapprunner.com/api/v1/tenants/5e8f573d-5ff0-4c2a-a44d-e7e3233eb388/workspaces/f58412eb-11b0-4c46-ba14-1c0bb0d9c802/entities/lead'
+  CrmOrganisationId:
+    Type: String
+    Default: 'b0423abb-72d5-48ab-b67e-79834ef878e8'
+  CrmBranchId:
+    Type: String
+    Default: 'c67933e8-f0ab-4078-81aa-50be5dcf1e74'
+  CrmOwnerId:
+    Type: String
+    Default: 'ec3758dd-6dce-40e7-be28-dcb5c585fdc1'
+
+Globals:
+  Function:
+    Runtime: nodejs20.x
+    Timeout: 15
+    MemorySize: 256
+
+Resources:
+  SubmitLeadFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: kanan-study-french-submit-lead
+      Description: Proxy study-french form posts to CRM lead API
+      CodeUri: src/
+      Handler: handler.handler
+      Environment:
+        Variables:
+          CRM_API_KEY: !Ref CrmApiKey
+          CRM_LEAD_URL: !Ref CrmLeadUrl
+          CRM_ORGANISATION_ID: !Ref CrmOrganisationId
+          CRM_BRANCH_ID: !Ref CrmBranchId
+          CRM_OWNER_ID: !Ref CrmOwnerId
+      FunctionUrlConfig:
+        AuthType: NONE
+        Cors:
+          AllowOrigins:
+            - '*'
+          AllowMethods:
+            - POST
+            - OPTIONS
+          AllowHeaders:
+            - content-type
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - logs:CreateLogGroup
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+              Resource: '*'
+
+Outputs:
+  SubmitLeadFunctionUrl:
+    Description: Set this as Amplify Hosting env CRM_SUBMIT_URL (public Function URL)
+    Value: !GetAtt SubmitLeadFunctionUrl.FunctionUrl
+  SubmitLeadFunctionArn:
+    Description: Lambda ARN
+    Value: !GetAtt SubmitLeadFunction.Arn

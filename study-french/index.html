@@ -1657,7 +1657,13 @@
       }
 
       try {
-        const response = await fetch('/api/submit-lead', {
+        // Amplify build replaces __CRM_SUBMIT_URL__ with the Lambda Function URL.
+        // Local Netlify uses /api/submit-lead. Do not put CRM_API_KEY here.
+        var submitUrl = '__CRM_SUBMIT_URL__' || '/api/submit-lead';
+        if (!submitUrl || submitUrl.indexOf('__CRM_SUBMIT_URL__') !== -1) {
+          submitUrl = '/api/submit-lead';
+        }
+        const response = await fetch(submitUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, email, mobile_number, remarks }),
