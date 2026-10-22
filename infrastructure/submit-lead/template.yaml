@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: CRM lead submit for study-french (Amplify-compatible Lambda Function URL)
+Description: CRM lead submit proxy (Amplify-compatible Lambda Function URL)
 
 Parameters:
   CrmApiKey:
@@ -13,12 +13,15 @@ Parameters:
   CrmOrganisationId:
     Type: String
     Default: 'b0423abb-72d5-48ab-b67e-79834ef878e8'
+    Description: Legacy fallback when bundled crm-lead-routing.json has no valid entries.
   CrmBranchId:
     Type: String
     Default: 'c67933e8-f0ab-4078-81aa-50be5dcf1e74'
+    Description: Legacy fallback when bundled crm-lead-routing.json has no valid entries.
   CrmOwnerId:
     Type: String
     Default: 'ec3758dd-6dce-40e7-be28-dcb5c585fdc1'
+    Description: Legacy fallback when bundled crm-lead-routing.json has no valid entries.
 
 Globals:
   Function:
@@ -31,7 +34,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: kanan-study-french-submit-lead
-      Description: Proxy study-french form posts to CRM lead API
+      Description: Proxy landing form posts to CRM lead API (per-landing routing)
       CodeUri: src/
       Handler: handler.handler
       Environment:

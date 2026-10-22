@@ -5,8 +5,8 @@ Form posts go to a server-side proxy (never put `CRM_API_KEY` in page JavaScript
 ## Flow
 
 1. User fills the native form on `/study-french/`
-2. Browser POSTs JSON `{ name, email, mobile_number, remarks }`
-3. Proxy forwards to the CRM lead API with `x-api-key`
+2. Browser POSTs JSON with contact fields and `utm_source_url=study-french`
+3. Proxy resolves `organisation_id`, `branch_id`, `owner_id` from bundled [`shared/crm-lead-routing.json`](../shared/crm-lead-routing.json) and forwards to the CRM lead API with `x-api-key`
 4. On success → `/study-french/thank-you`
 
 ## Endpoints
@@ -18,14 +18,15 @@ Form posts go to a server-side proxy (never put `CRM_API_KEY` in page JavaScript
 
 Shared CRM logic: [`shared/submit-lead-core.js`](../shared/submit-lead-core.js).
 
+## Per-landing CRM IDs
+
+Edit **[`shared/crm-lead-routing.json`](../shared/crm-lead-routing.json)** in the repo (one object per `utm_source_url` slug). Redeploy the Lambda after changes so the updated JSON is bundled (`cp` into `infrastructure/submit-lead/src/` before `sam deploy` — see [AMPLIFY_SETUP.md](../AMPLIFY_SETUP.md)).
+
 ## Netlify env (local `.env` or Netlify dashboard)
 
 ```bash
 CRM_API_KEY=...
-CRM_LEAD_URL=...
-CRM_ORGANISATION_ID=...
-CRM_BRANCH_ID=...
-CRM_OWNER_ID=...
+CRM_LEAD_URL=...   # optional
 ```
 
 ```bash
@@ -38,8 +39,8 @@ Do not commit `.env` (gitignored).
 
 See [AMPLIFY_SETUP.md](../AMPLIFY_SETUP.md):
 
-1. Deploy Lambda with CRM secrets (see [AMPLIFY_SETUP.md](../AMPLIFY_SETUP.md))
-2. Amplify Hosting env: **`CRM_SUBMIT_URL` only** — remove `CRM_API_KEY` and other CRM_* vars from Amplify
+1. Deploy Lambda with `CRM_API_KEY` (routing JSON ships in the function code)
+2. Amplify Hosting env: **`CRM_SUBMIT_URL` only**
 3. Add thank-you rewrites from `amplify-redirects.json`
 
 ## Form → CRM field mapping
@@ -51,4 +52,4 @@ See [AMPLIFY_SETUP.md](../AMPLIFY_SETUP.md):
 | Enter your Email ID | `email` |
 | Educational qualification | `remarks` |
 
-Fixed UTMs: `utm_source=Google`, `utm_category=paid_lead`, `utm_campaign=French_Course_Leads`, `lead_source=Google`, `utm_source_url=study-french`.
+UTMs sent with the POST: `utm_source=Google`, `utm_category=paid_lead`, `utm_campaign=French_Course_Leads`, `lead_source=Google`, `utm_source_url=study-french`.

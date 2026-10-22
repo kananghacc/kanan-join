@@ -4,11 +4,13 @@ Static pages deploy on **Amplify Hosting**. The CRM API key must live on a **Lam
 
 ## 1. Deploy the submit-lead Lambda
 
+Per-landing CRM IDs live in **[`shared/crm-lead-routing.json`](../shared/crm-lead-routing.json)** (bundled in the function). Edit that file in git, then sync and deploy:
+
 ```bash
 cd infrastructure/submit-lead
 
-# Keep src/submit-lead-core.js in sync with shared/submit-lead-core.js
 cp ../../shared/submit-lead-core.js src/submit-lead-core.js
+cp ../../shared/crm-lead-routing.json src/crm-lead-routing.json
 
 sam build
 sam deploy --guided \
@@ -23,9 +25,11 @@ Lambda environment variables (set via SAM parameters):
 | --- | --- |
 | `CRM_API_KEY` | Yes |
 | `CRM_LEAD_URL` | Optional (has default) |
-| `CRM_ORGANISATION_ID` | Optional |
-| `CRM_BRANCH_ID` | Optional |
-| `CRM_OWNER_ID` | Optional |
+| `CRM_ORGANISATION_ID` | Optional legacy fallback if routing file has no valid UUID entries |
+| `CRM_BRANCH_ID` | Optional legacy fallback |
+| `CRM_OWNER_ID` | Optional legacy fallback |
+
+Routing uses **`utm_source_url`** from each form POST against keys in `crm-lead-routing.json`. Only slugs with valid UUIDs in that file are accepted; unknown slugs return **400**.
 
 ## 2. Connect the repo to Amplify Hosting
 
@@ -35,7 +39,7 @@ Lambda environment variables (set via SAM parameters):
 
 | Action | Variable |
 | --- | --- |
-| **Remove** (if present) | `CRM_API_KEY`, `CRM_LEAD_URL`, `CRM_ORGANISATION_ID`, `CRM_BRANCH_ID`, `CRM_OWNER_ID` |
+| **Remove** (if present) | `CRM_API_KEY`, `CRM_LEAD_URL`, `CRM_ORGANISATION_ID`, `CRM_BRANCH_ID`, `CRM_OWNER_ID`, `CRM_LANDING_CONFIG` |
 | **Set** (all branches) | `CRM_SUBMIT_URL` = Lambda Function URL from step 1 |
 
 `CRM_SUBMIT_URL` is public (not a secret). CRM credentials stay on **Lambda** only.
@@ -52,7 +56,7 @@ Default region `us-east-1`, branch `main` — override with `AMPLIFY_REGION` / `
 4. Import redirects from [`amplify-redirects.json`](amplify-redirects.json):  
    **Hosting → Rewrites and redirects** → add the thank-you `200` rules (especially `/study-french/thank-you` → `/study-french/thank-you.html`).
 
-5. Redeploy so `amplify.yml` injects `CRM_SUBMIT_URL` into `dist/study-french/index.html`.
+5. Redeploy so `amplify.yml` injects `CRM_SUBMIT_URL` into `dist/study-french/index.html` and `dist/shared/kanan-crm-config.js`.
 
 ## 3. How the form chooses the endpoint
 
@@ -62,7 +66,7 @@ Default region `us-east-1`, branch `main` — override with `AMPLIFY_REGION` / `
 | Netlify / `netlify dev` | `/api/submit-lead` → Netlify Function |
 | Static open / no proxy | `/api/submit-lead` will fail |
 
-## 4. Local Netlify (unchanged)
+## 4. Local Netlify
 
 `.env` at repo root with `CRM_API_KEY=...` then:
 
@@ -70,4 +74,4 @@ Default region `us-east-1`, branch `main` — override with `AMPLIFY_REGION` / `
 npx netlify dev
 ```
 
-See [study-french/CRM_SETUP.md](study-french/CRM_SETUP.md).
+Routing JSON is read from `shared/crm-lead-routing.json` (same file as Lambda). See [study-french/CRM_SETUP.md](study-french/CRM_SETUP.md).

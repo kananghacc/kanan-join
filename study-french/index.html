@@ -1771,7 +1771,17 @@
         const response = await fetch(submitUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, mobile_number, remarks }),
+          body: JSON.stringify({
+            name,
+            email,
+            mobile_number,
+            remarks,
+            utm_source: 'Google',
+            utm_category: 'paid_lead',
+            utm_campaign: 'French_Course_Leads',
+            lead_source: 'Google',
+            utm_source_url: 'study-french',
+          }),
         });
 
         let result = null;

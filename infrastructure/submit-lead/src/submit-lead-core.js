@@ -25,6 +25,9 @@ const isLambdaRuntime = Boolean(
   process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.AWS_EXECUTION_ENV
 );
 
+/** @type {Record<string, { organisation_id: string, branch_id: string, owner_id: string }> | null | undefined} */
+let cachedLandingConfig;
+
 function responseHeaders() {
   if (isLambdaRuntime) {
     return { 'Content-Type': 'application/json' };
@@ -55,6 +58,128 @@ function parseBody(event) {
     raw = Buffer.from(raw, 'base64').toString('utf8');
   }
   return JSON.parse(raw || '{}');
+}
+
+const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/**
+ * @param {unknown} parsed
+ * @returns {Record<string, { organisation_id: string, branch_id: string, owner_id: string }>}
+ */
+function normalizeLandingConfig(parsed) {
+  /** @type {Record<string, { organisation_id: string, branch_id: string, owner_id: string }>} */
+  const normalized = {};
+
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+    return normalized;
+  }
+
+  for (const [key, value] of Object.entries(parsed)) {
+    const slug = String(key).trim().toLowerCase();
+    if (!slug || slug.startsWith('_')) {
+      continue;
+    }
+    if (!value || typeof value !== 'object' || Array.isArray(value)) {
+      console.error('crm-lead-routing.json invalid entry for slug:', key);
+      continue;
+    }
+    const organisation_id = String(value.organisation_id || '').trim();
+    const branch_id = String(value.branch_id || '').trim();
+    const owner_id = String(value.owner_id || '').trim();
+    if (
+      !UUID_RE.test(organisation_id) ||
+      !UUID_RE.test(branch_id) ||
+      !UUID_RE.test(owner_id)
+    ) {
+      continue;
+    }
+    normalized[slug] = { organisation_id, branch_id, owner_id };
+  }
+
+  return normalized;
+}
+
+/**
+ * Loads bundled shared/crm-lead-routing.json (shipped with Lambda / Netlify function).
+ * @returns {Record<string, { organisation_id: string, branch_id: string, owner_id: string }> | null}
+ */
+function loadLandingConfig() {
+  if (cachedLandingConfig !== undefined) {
+    return cachedLandingConfig;
+  }
+
+  let parsed;
+  try {
+    parsed = require('./crm-lead-routing.json');
+  } catch (err) {
+    console.error('crm-lead-routing.json could not be loaded', err);
+    cachedLandingConfig = null;
+    return null;
+  }
+
+  const normalized = normalizeLandingConfig(parsed);
+  if (Object.keys(normalized).length === 0) {
+    cachedLandingConfig = null;
+    return null;
+  }
+
+  cachedLandingConfig = normalized;
+  return normalized;
+}
+
+/** @internal Test helper */
+function resetLandingConfigCache() {
+  cachedLandingConfig = undefined;
+  try {
+    delete require.cache[require.resolve('./crm-lead-routing.json')];
+  } catch {
+    /* not loaded yet */
+  }
+}
+
+/**
+ * @param {object} data
+ * @returns {{ ok: true, slug: string } | { ok: false, error: string }}
+ */
+function resolveLandingSlug(data) {
+  const raw = data.utm_source_url;
+  if (raw === undefined || raw === null) {
+    return { ok: false, error: 'utm_source_url is required' };
+  }
+  const slug = String(raw).trim().toLowerCase();
+  if (!slug) {
+    return { ok: false, error: 'utm_source_url is required' };
+  }
+  return { ok: true, slug };
+}
+
+/**
+ * @param {string} slug
+ * @returns {{ ok: true, organisation_id: string, branch_id: string, owner_id: string } | { ok: false, error: string, statusCode?: number }}
+ */
+function resolveCrmIds(slug) {
+  const config = loadLandingConfig();
+
+  if (config) {
+    const entry = config[slug];
+    if (!entry) {
+      return {
+        ok: false,
+        statusCode: 400,
+        error: `Unknown landing: ${slug}`,
+      };
+    }
+    return { ok: true, ...entry };
+  }
+
+  return {
+    ok: true,
+    organisation_id:
+      process.env.CRM_ORGANISATION_ID || DEFAULTS.CRM_ORGANISATION_ID,
+    branch_id: process.env.CRM_BRANCH_ID || DEFAULTS.CRM_BRANCH_ID,
+    owner_id: process.env.CRM_OWNER_ID || DEFAULTS.CRM_OWNER_ID,
+  };
 }
 
 const UTM_DEFAULTS = {
@@ -99,11 +224,27 @@ async function createLead(data) {
   email = contact.email;
   mobile_number = contact.mobile_number;
 
+  const landingConfig = loadLandingConfig();
+  let crmIds;
+
+  if (landingConfig) {
+    const slugResult = resolveLandingSlug(data);
+    if (!slugResult.ok) {
+      return jsonResponse(400, { error: slugResult.error });
+    }
+    const idsResult = resolveCrmIds(slugResult.slug);
+    if (!idsResult.ok) {
+      return jsonResponse(idsResult.statusCode || 400, { error: idsResult.error });
+    }
+    crmIds = idsResult;
+  } else {
+    crmIds = resolveCrmIds('');
+  }
+
   const payload = {
-    organisation_id:
-      process.env.CRM_ORGANISATION_ID || DEFAULTS.CRM_ORGANISATION_ID,
-    branch_id: process.env.CRM_BRANCH_ID || DEFAULTS.CRM_BRANCH_ID,
-    owner_id: process.env.CRM_OWNER_ID || DEFAULTS.CRM_OWNER_ID,
+    organisation_id: crmIds.organisation_id,
+    branch_id: crmIds.branch_id,
+    owner_id: crmIds.owner_id,
     first_name: name,
     last_name: '-',
     email,
@@ -181,4 +322,9 @@ module.exports = {
   handleSubmitLead,
   corsHeaders,
   jsonResponse,
+  loadLandingConfig,
+  normalizeLandingConfig,
+  resolveLandingSlug,
+  resolveCrmIds,
+  resetLandingConfigCache,
 };

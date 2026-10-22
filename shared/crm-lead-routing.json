@@ -1,0 +1,57 @@
+{
+  "australia": {
+    "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
+    "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
+    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1"
+  },
+  "canada": {
+    "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
+    "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
+    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1"
+  },
+  "uk": {
+    "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
+    "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
+    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1"
+  },
+  "us": {
+    "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
+    "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
+    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1"
+  },
+  "germany": {
+    "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
+    "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
+    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1"
+  },
+  "dubai": {
+    "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
+    "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
+    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1"
+  },
+  "h1b-canada": {
+    "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
+    "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
+    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1"
+  },
+  "to-canada-from-vadodara": {
+    "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
+    "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
+    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1"
+  },
+  "study-french-learning": {
+    "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
+    "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
+    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1"
+  },
+  "ielts-chennai": {
+    "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
+    "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
+    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1"
+  },
+  "study-french": {
+    "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
+    "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
+    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1"
+  }
+}
