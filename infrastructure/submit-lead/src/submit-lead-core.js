@@ -63,6 +63,14 @@ function parseBody(event) {
 const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
+const UTM_CONFIG_KEYS = [
+  'utm_source',
+  'utm_category',
+  'utm_campaign',
+  'lead_source',
+  'utm_source_url',
+];
+
 /**
  * @param {unknown} parsed
  * @returns {Record<string, { organisation_id: string, branch_id: string, owner_id: string }>}
@@ -94,7 +102,15 @@ function normalizeLandingConfig(parsed) {
     ) {
       continue;
     }
-    normalized[slug] = { organisation_id, branch_id, owner_id };
+    /** @type {{ organisation_id: string, branch_id: string, owner_id: string, utm_source?: string, utm_category?: string, utm_campaign?: string, lead_source?: string, utm_source_url?: string }} */
+    const entry = { organisation_id, branch_id, owner_id };
+    for (const utmKey of UTM_CONFIG_KEYS) {
+      const utmVal = String(value[utmKey] || '').trim();
+      if (utmVal) {
+        entry[utmKey] = utmVal;
+      }
+    }
+    normalized[slug] = entry;
   }
 
   return normalized;
@@ -186,17 +202,49 @@ const UTM_DEFAULTS = {
   utm_source: 'Google',
   utm_category: 'paid_lead',
   utm_campaign: 'French_Course_Leads',
-  lead_source: 'Google',
+  lead_source: 'google',
   utm_source_url: 'study-french',
 };
 
-function optionalUtmField(data, key) {
+/**
+ * @param {object} data
+ * @param {string} key
+ * @param {Record<string, string>} landingUtm
+ */
+function optionalUtmField(data, key, landingUtm) {
   const raw = data[key];
   if (raw === undefined || raw === null) {
-    return UTM_DEFAULTS[key];
+    return landingUtm[key] ?? UTM_DEFAULTS[key];
   }
   const trimmed = String(raw).trim();
-  return trimmed || UTM_DEFAULTS[key];
+  return trimmed || (landingUtm[key] ?? UTM_DEFAULTS[key]);
+}
+
+/**
+ * @param {Record<string, string> | undefined} entry
+ * @returns {Record<string, string>}
+ */
+function landingUtmDefaults(entry) {
+  if (!entry) {
+    return { ...UTM_DEFAULTS };
+  }
+  return { ...UTM_DEFAULTS, ...pickLandingUtmFields(entry) };
+}
+
+/**
+ * @param {object} entry
+ * @returns {Record<string, string>}
+ */
+function pickLandingUtmFields(entry) {
+  /** @type {Record<string, string>} */
+  const utm = {};
+  for (const key of UTM_CONFIG_KEYS) {
+    const val = entry[key];
+    if (val !== undefined && val !== null && String(val).trim()) {
+      utm[key] = String(val).trim();
+    }
+  }
+  return utm;
 }
 
 async function createLead(data) {
@@ -226,6 +274,8 @@ async function createLead(data) {
 
   const landingConfig = loadLandingConfig();
   let crmIds;
+  /** @type {Record<string, string>} */
+  let utmDefaults = { ...UTM_DEFAULTS };
 
   if (landingConfig) {
     const slugResult = resolveLandingSlug(data);
@@ -237,6 +287,7 @@ async function createLead(data) {
       return jsonResponse(idsResult.statusCode || 400, { error: idsResult.error });
     }
     crmIds = idsResult;
+    utmDefaults = landingUtmDefaults(landingConfig[slugResult.slug]);
   } else {
     crmIds = resolveCrmIds('');
   }
@@ -251,11 +302,11 @@ async function createLead(data) {
     mobile_number,
     remarks,
     name,
-    utm_source: optionalUtmField(data, 'utm_source'),
-    utm_category: optionalUtmField(data, 'utm_category'),
-    utm_campaign: optionalUtmField(data, 'utm_campaign'),
-    lead_source: optionalUtmField(data, 'lead_source'),
-    utm_source_url: optionalUtmField(data, 'utm_source_url'),
+    utm_source: optionalUtmField(data, 'utm_source', utmDefaults),
+    utm_category: optionalUtmField(data, 'utm_category', utmDefaults),
+    utm_campaign: optionalUtmField(data, 'utm_campaign', utmDefaults),
+    lead_source: optionalUtmField(data, 'lead_source', utmDefaults),
+    utm_source_url: optionalUtmField(data, 'utm_source_url', utmDefaults),
   };
 
   const crmUrl = process.env.CRM_LEAD_URL || DEFAULTS.CRM_LEAD_URL;

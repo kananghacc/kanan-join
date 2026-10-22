@@ -6,8 +6,13 @@
   },
   "canada": {
     "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
-    "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
-    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1"
+    "branch_id": "dab50fe2-ca7b-450e-96c4-7307ae74f376",
+    "owner_id": "5c495246-87f1-45bc-ac09-38c40f8f9b27",
+    "utm_source": "Google",
+    "utm_category": "paid_lead",
+    "utm_campaign": "Study_In_Canada",
+    "lead_source": "Google",
+    "utm_source_url": "canada"
   },
   "uk": {
     "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
@@ -44,14 +49,34 @@
     "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
     "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1"
   },
+  "study-french-india": {
+    "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
+    "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
+    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1",
+    "utm_source": "Google",
+    "utm_category": "paid_lead",
+    "utm_campaign": "French_Education_India",
+    "lead_source": "google",
+    "utm_source_url": "study-french-india"
+  },
   "ielts-chennai": {
     "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
     "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
-    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1"
+    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1",
+    "utm_source": "Google",
+    "utm_category": "paid_lead",
+    "utm_campaign": "IELTS_Chennai",
+    "lead_source": "Google",
+    "utm_source_url": "ielts-chennai"
   },
   "study-french": {
     "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
     "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
-    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1"
+    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1",
+    "utm_source": "Google",
+    "utm_category": "paid_lead",
+    "utm_campaign": "French_Course_Leads",
+    "lead_source": "google",
+    "utm_source_url": "study-french"
   }
 }

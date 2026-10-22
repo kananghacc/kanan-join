@@ -52,4 +52,4 @@ See [AMPLIFY_SETUP.md](../AMPLIFY_SETUP.md):
 | Enter your Email ID | `email` |
 | Educational qualification | `remarks` |
 
-UTMs sent with the POST: `utm_source=Google`, `utm_category=paid_lead`, `utm_campaign=French_Course_Leads`, `lead_source=Google`, `utm_source_url=study-french`.
+UTMs sent with the POST: `utm_source=Google`, `utm_category=paid_lead`, `utm_campaign=French_Course_Leads`, `lead_source=google`, `utm_source_url=study-french`.

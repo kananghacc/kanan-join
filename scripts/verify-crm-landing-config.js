@@ -20,6 +20,7 @@ const REQUIRED_SLUGS = [
   'h1b-canada',
   'to-canada-from-vadodara',
   'study-french-learning',
+  'study-french-india',
   'ielts-chennai',
   'study-french',
 ];

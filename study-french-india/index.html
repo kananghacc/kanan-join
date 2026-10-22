@@ -53,6 +53,7 @@
     }
   </script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/shared/kanan-lead-form.css" />
   <style>
     /* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 */
     :root {
@@ -266,10 +267,36 @@
             <h2 class="text-xl font-extrabold">Book your French level check</h2>
             <p class="mt-1 text-sm text-ink-soft">Share your destination and timeline. Our team will call you back.</p>
             <div class="mt-4 rounded-lg bg-white p-3 shadow-sm">
-              <iframe
-                data-tally-src="https://tally.so/embed/2ED8rp?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-                loading="lazy" width="100%" height="330" frameborder="0" marginheight="0" marginwidth="0"
-                title="Register for free French level check"></iframe>
+              <form class="kanan-lead-form kanan-lead-form--brand" data-kanan-lead-form novalidate
+                data-thank-you="/study-french-india/thank-you.html"
+                data-utm-source="Google"
+                data-utm-source-url="study-french-india"
+                data-utm-campaign="French_Education_India"
+                data-utm-category="paid_lead"
+                data-lead-source="google">
+                <div class="kanan-field">
+                  <label for="sfi-mobile-lead-name">Full Name</label>
+                  <input id="sfi-mobile-lead-name" name="name" type="text" required autocomplete="name"
+                    placeholder="Your full name" />
+                </div>
+                <div class="kanan-field">
+                  <label for="sfi-mobile-lead-mobile">Mobile Number</label>
+                  <input id="sfi-mobile-lead-mobile" name="mobile_number" type="tel" required autocomplete="tel"
+                    placeholder="e.g. 9876543210 (10-digit mobile)" />
+                </div>
+                <div class="kanan-field">
+                  <label for="sfi-mobile-lead-email">Email</label>
+                  <input id="sfi-mobile-lead-email" name="email" type="email" required autocomplete="email"
+                    placeholder="you@example.com" />
+                </div>
+                <div class="kanan-field">
+                  <label for="sfi-mobile-lead-remarks">Educational qualification</label>
+                  <input id="sfi-mobile-lead-remarks" name="remarks" type="text" required
+                    placeholder="e.g. B.Com, final year BBA" />
+                </div>
+                <button type="submit" class="kanan-submit-btn">Book Free Level Check</button>
+                <div class="kanan-form-error" role="alert"></div>
+              </form>
             </div>
           </div>
         </div>
@@ -504,10 +531,36 @@
         </button>
       </div>
       <div class="rounded-lg bg-white p-3 shadow-sm">
-        <iframe
-          data-tally-src="https://tally.so/embed/2ED8rp?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-          loading="lazy" width="100%" height="340" frameborder="0" marginheight="0" marginwidth="0"
-          title="Register for French level check"></iframe>
+        <form class="kanan-lead-form kanan-lead-form--brand" data-kanan-lead-form novalidate
+          data-thank-you="/study-french-india/thank-you.html"
+          data-utm-source="Google"
+          data-utm-source-url="study-french-india"
+          data-utm-campaign="French_Education_India"
+          data-utm-category="paid_lead"
+          data-lead-source="google">
+          <div class="kanan-field">
+            <label for="sfi-modal-lead-name">Full Name</label>
+            <input id="sfi-modal-lead-name" name="name" type="text" required autocomplete="name"
+              placeholder="Your full name" />
+          </div>
+          <div class="kanan-field">
+            <label for="sfi-modal-lead-mobile">Mobile Number</label>
+            <input id="sfi-modal-lead-mobile" name="mobile_number" type="tel" required autocomplete="tel"
+              placeholder="e.g. 9876543210 (10-digit mobile)" />
+          </div>
+          <div class="kanan-field">
+            <label for="sfi-modal-lead-email">Email</label>
+            <input id="sfi-modal-lead-email" name="email" type="email" required autocomplete="email"
+              placeholder="you@example.com" />
+          </div>
+          <div class="kanan-field">
+            <label for="sfi-modal-lead-remarks">Educational qualification</label>
+            <input id="sfi-modal-lead-remarks" name="remarks" type="text" required
+              placeholder="e.g. B.Com, final year BBA" />
+          </div>
+          <button type="submit" class="kanan-submit-btn">Book Free Level Check</button>
+          <div class="kanan-form-error" role="alert"></div>
+        </form>
       </div>
     </div>
   </div>
@@ -533,34 +586,7 @@
   </footer>
 
   <script>
-    function loadTallyEmbeds() {
-      var d = document;
-      var w = "https://tally.so/widgets/embed.js";
-      var v = function () {
-        if (typeof Tally !== "undefined") {
-          Tally.loadEmbeds();
-        } else {
-          d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach(function (e) {
-            e.src = e.dataset.tallySrc;
-          });
-        }
-      };
-
-      if (typeof Tally !== "undefined") {
-        v();
-      } else if (d.querySelector('script[src="' + w + '"]') == null) {
-        var s = d.createElement("script");
-        s.src = w;
-        s.onload = v;
-        s.onerror = v;
-        d.body.appendChild(s);
-      } else {
-        v();
-      }
-    }
-
     function openConsultationForm() {
-      loadTallyEmbeds();
       if (window.innerWidth < 768) {
         var mobileFormSection = document.getElementById('mobile-form-section');
         if (mobileFormSection) {
@@ -569,8 +595,8 @@
               behavior: 'smooth',
               block: 'center'
             });
-            var mobileIframe = mobileFormSection.querySelector('iframe');
-            if (mobileIframe) mobileIframe.focus();
+            var firstInput = mobileFormSection.querySelector('input');
+            if (firstInput) firstInput.focus();
           }, 80);
           return;
         }
@@ -580,6 +606,8 @@
       if (!modal) return;
       modal.classList.add('show');
       document.body.style.overflow = 'hidden';
+      var modalInput = modal.querySelector('input');
+      if (modalInput) modalInput.focus();
     }
 
     function closeConsultationForm() {
@@ -591,7 +619,6 @@
     }
 
     function initializePage() {
-      loadTallyEmbeds();
       var modal = document.getElementById('consultation-modal');
       if (modal) {
         modal.addEventListener('click', function (event) {
@@ -609,6 +636,9 @@
       initializePage();
     }
   </script>
+  <script src="/shared/kanan-crm-config.js"></script>
+  <script src="/shared/kanan-lead-validation.js"></script>
+  <script src="/shared/kanan-lead-form.js"></script>
 
   <!-- WhatsApp Floating Button -->
   <a href="https://api.whatsapp.com/send/?phone=919150050940&text=Hi,%20Can%20you%20share%20more%20details%20about%20French%20training%20program"
