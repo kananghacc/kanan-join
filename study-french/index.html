@@ -1764,8 +1764,10 @@
       try {
         // Amplify build replaces __CRM_SUBMIT_URL__ with the Lambda Function URL.
         // Local Netlify uses /api/submit-lead. Do not put CRM_API_KEY here.
-        var submitUrl = '__CRM_SUBMIT_URL__' || '/api/submit-lead';
-        if (!submitUrl || submitUrl.indexOf('__CRM_SUBMIT_URL__') !== -1) {
+        // Detect unset placeholder via http prefix — do NOT indexOf the token itself
+        // (sed replaces every __CRM_SUBMIT_URL__ occurrence, which would make that check always true).
+        var submitUrl = '__CRM_SUBMIT_URL__';
+        if (!submitUrl || submitUrl.indexOf('http') !== 0) {
           submitUrl = '/api/submit-lead';
         }
         const response = await fetch(submitUrl, {
