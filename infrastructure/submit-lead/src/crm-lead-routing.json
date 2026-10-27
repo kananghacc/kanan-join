@@ -47,7 +47,12 @@
   "study-french-learning": {
     "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
     "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
-    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1"
+    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1",
+    "utm_source": "Google",
+    "utm_category": "paid_lead",
+    "utm_campaign": "Study_French_Learning",
+    "lead_source": "google",
+    "utm_source_url": "study-french-learning"
   },
   "study-french-india": {
     "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
@@ -78,5 +83,15 @@
     "utm_campaign": "French_Course_Leads",
     "lead_source": "google",
     "utm_source_url": "study-french"
+  },
+  "ielts-online-training": {
+    "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
+    "branch_id": "13d597e7-13ca-4ad8-84c1-5f8570d919b5",
+    "owner_id": "5c495246-87f1-45bc-ac09-38c40f8f9b27",
+    "utm_source": "Google",
+    "utm_category": "paid_lead",
+    "utm_campaign": "IELTS_Online",
+    "lead_source": "google",
+    "utm_source_url": "ielts-online-training"
   }
 }

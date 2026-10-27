@@ -19,6 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&display=swap" rel="stylesheet" />
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/shared/kanan-lead-form.css" />
     <script>
       tailwind.config = {
         theme: {
@@ -309,12 +310,38 @@
                 <p class="text-sm text-black/70">Fill the form below to book your free consultation</p>
               </div>
               
-              <!-- Tally.so Form Container -->
               <div class="w-full">
                 <div id="mobile-form-container" style="border-radius: 8px; padding: 16px; background: white; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-                  <!-- Tally.so Form -->
-                  <iframe data-tally-src="https://tally.so/embed/3E988L?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="320" frameborder="0" marginheight="0" marginwidth="0" title="Register For Free 1:1 Demo Class"></iframe>
-                  <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+                  <form class="kanan-lead-form kanan-lead-form--brand" data-kanan-lead-form novalidate
+                    data-thank-you="/ielts-online-training/thank-you.html"
+                    data-utm-source="Google"
+                    data-utm-source-url="ielts-online-training"
+                    data-utm-campaign="IELTS_Online"
+                    data-utm-category="paid_lead"
+                    data-lead-source="google">
+                    <div class="kanan-field">
+                      <label for="iot-mobile-lead-name">Full Name</label>
+                      <input id="iot-mobile-lead-name" name="name" type="text" required autocomplete="name"
+                        placeholder="Your full name" />
+                    </div>
+                    <div class="kanan-field">
+                      <label for="iot-mobile-lead-mobile">Mobile Number</label>
+                      <input id="iot-mobile-lead-mobile" name="mobile_number" type="tel" required autocomplete="tel"
+                        placeholder="e.g. 9876543210 (10-digit mobile)" />
+                    </div>
+                    <div class="kanan-field">
+                      <label for="iot-mobile-lead-email">Email</label>
+                      <input id="iot-mobile-lead-email" name="email" type="email" required autocomplete="email"
+                        placeholder="you@example.com" />
+                    </div>
+                    <div class="kanan-field">
+                      <label for="iot-mobile-lead-remarks">When do you plan to take IELTS?</label>
+                      <input id="iot-mobile-lead-remarks" name="remarks" type="text" required
+                        placeholder="e.g. 3-6 Months" />
+                    </div>
+                    <button type="submit" class="kanan-submit-btn">Book Free Demo Class</button>
+                    <div class="kanan-form-error" role="alert"></div>
+                  </form>
                 </div>
               </div>
             </div>
@@ -1155,12 +1182,38 @@
                 </button>
             </div>
 
-            <!-- Tally.so Form Container -->
             <div class="w-full">
                 <div id="form-container" style="border-radius: 8px; padding: 24px; background: white; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-                    <!-- Tally.so Form -->
-                    <iframe data-tally-src="https://tally.so/embed/3E988L?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="320" frameborder="0" marginheight="0" marginwidth="0" title="Register For Free 1:1 Demo Class"></iframe>
-                    <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+                    <form class="kanan-lead-form kanan-lead-form--brand" data-kanan-lead-form novalidate
+                      data-thank-you="/ielts-online-training/thank-you.html"
+                      data-utm-source="Google"
+                      data-utm-source-url="ielts-online-training"
+                      data-utm-campaign="IELTS_Online"
+                      data-utm-category="paid_lead"
+                      data-lead-source="google">
+                      <div class="kanan-field">
+                        <label for="iot-modal-lead-name">Full Name</label>
+                        <input id="iot-modal-lead-name" name="name" type="text" required autocomplete="name"
+                          placeholder="Your full name" />
+                      </div>
+                      <div class="kanan-field">
+                        <label for="iot-modal-lead-mobile">Mobile Number</label>
+                        <input id="iot-modal-lead-mobile" name="mobile_number" type="tel" required autocomplete="tel"
+                          placeholder="e.g. 9876543210 (10-digit mobile)" />
+                      </div>
+                      <div class="kanan-field">
+                        <label for="iot-modal-lead-email">Email</label>
+                        <input id="iot-modal-lead-email" name="email" type="email" required autocomplete="email"
+                          placeholder="you@example.com" />
+                      </div>
+                      <div class="kanan-field">
+                        <label for="iot-modal-lead-remarks">When do you plan to take IELTS?</label>
+                        <input id="iot-modal-lead-remarks" name="remarks" type="text" required
+                          placeholder="e.g. 3-6 Months" />
+                      </div>
+                      <button type="submit" class="kanan-submit-btn">Book Free Demo Class</button>
+                      <div class="kanan-form-error" role="alert"></div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -1200,35 +1253,27 @@
   <script>
     // Modal functions (defined globally for immediate availability)
     function openConsultationForm(selectedPackage = '') {
-      console.log('openConsultationForm called'); // Debug log
-      
-      // Check if mobile (screen width < 768px)
       if (window.innerWidth < 768) {
-        // Scroll to mobile form section
-        const mobileFormSection = document.getElementById('mobile-form-section');
+        var mobileFormSection = document.getElementById('mobile-form-section');
         if (mobileFormSection) {
-          mobileFormSection.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      } else {
-        // Desktop: show modal
-        const modal = document.getElementById('consultation-modal');
-
-        if (!modal) {
-          console.error('Modal element not found!');
-          alert('Modal element not found! Check console for details.');
+          window.setTimeout(function () {
+            mobileFormSection.scrollIntoView({
+              behavior: 'smooth',
+              block: 'center'
+            });
+            var firstInput = mobileFormSection.querySelector('input');
+            if (firstInput) firstInput.focus();
+          }, 80);
           return;
         }
-
-        console.log('Modal found, showing modal'); // Debug log
-        // Show the modal with the embedded form
-        modal.classList.add('show');
-        document.body.style.overflow = 'hidden';
-
-        // You can add logic here to pre-populate the form based on selectedPackage if needed
       }
+
+      var modal = document.getElementById('consultation-modal');
+      if (!modal) return;
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+      var modalInput = modal.querySelector('input');
+      if (modalInput) modalInput.focus();
     }
 
     function closeConsultationForm() {
@@ -1238,8 +1283,6 @@
         document.body.style.overflow = 'auto';
       }
     }
-
-    // Form submission is now handled by the Tally.so form
 
     // Initialize modal functionality when DOM is ready
     function initializeModal() {
@@ -1287,10 +1330,13 @@
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initializeModal);
     } else {
-      // DOM is already ready
       initializeModal();
     }
-
+  </script>
+  <script src="/shared/kanan-crm-config.js"></script>
+  <script src="/shared/kanan-lead-validation.js"></script>
+  <script src="/shared/kanan-lead-form.js"></script>
+  <script>
     // Testimonial Carousel Functionality
     function initializeCarousel() {
       const carousel = document.getElementById('testimonial-carousel');
