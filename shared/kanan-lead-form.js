@@ -102,13 +102,8 @@
     return valid;
   }
 
-  var UTM_DATASET_KEYS = {
-    utm_source: 'utmSource',
-    utm_category: 'utmCategory',
-    utm_campaign: 'utmCampaign',
-    lead_source: 'leadSource',
-    utm_source_url: 'utmSourceUrl',
-  };
+  // Only the landing slug is sent; campaign UTMs are resolved on the server from crm-lead-routing.json
+  var LANDING_SLUG_DATASET_KEY = 'utmSourceUrl';
 
   async function handleLeadSubmit(event) {
     event.preventDefault();
@@ -143,12 +138,10 @@
       remarks: remarks,
     };
 
-    Object.keys(UTM_DATASET_KEYS).forEach(function (key) {
-      var v = form.dataset[UTM_DATASET_KEYS[key]];
-      if (v != null && String(v).trim() !== '') {
-        payload[key] = String(v).trim();
-      }
-    });
+    var landingSlug = form.dataset[LANDING_SLUG_DATASET_KEY];
+    if (landingSlug != null && String(landingSlug).trim() !== '') {
+      payload.utm_source_url = String(landingSlug).trim();
+    }
 
     if (submitBtn) {
       submitBtn.disabled = true;

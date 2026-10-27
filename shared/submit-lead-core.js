@@ -198,40 +198,8 @@ function resolveCrmIds(slug) {
   };
 }
 
-const UTM_DEFAULTS = {
-  utm_source: 'Google',
-  utm_category: 'paid_lead',
-  utm_campaign: 'French_Course_Leads',
-  lead_source: 'google',
-  utm_source_url: 'study-french',
-};
-
 /**
- * @param {object} data
- * @param {string} key
- * @param {Record<string, string>} landingUtm
- */
-function optionalUtmField(data, key, landingUtm) {
-  const raw = data[key];
-  if (raw === undefined || raw === null) {
-    return landingUtm[key] ?? UTM_DEFAULTS[key];
-  }
-  const trimmed = String(raw).trim();
-  return trimmed || (landingUtm[key] ?? UTM_DEFAULTS[key]);
-}
-
-/**
- * @param {Record<string, string> | undefined} entry
- * @returns {Record<string, string>}
- */
-function landingUtmDefaults(entry) {
-  if (!entry) {
-    return { ...UTM_DEFAULTS };
-  }
-  return { ...UTM_DEFAULTS, ...pickLandingUtmFields(entry) };
-}
-
-/**
+ * UTMs for the CRM payload come only from crm-lead-routing.json (not the request body).
  * @param {object} entry
  * @returns {Record<string, string>}
  */
@@ -275,19 +243,22 @@ async function createLead(data) {
   const landingConfig = loadLandingConfig();
   let crmIds;
   /** @type {Record<string, string>} */
-  let utmDefaults = { ...UTM_DEFAULTS };
+  let landingUtm = {};
+  /** @type {string | undefined} */
+  let resolvedSlug;
 
   if (landingConfig) {
     const slugResult = resolveLandingSlug(data);
     if (!slugResult.ok) {
       return jsonResponse(400, { error: slugResult.error });
     }
-    const idsResult = resolveCrmIds(slugResult.slug);
+    resolvedSlug = slugResult.slug;
+    const idsResult = resolveCrmIds(resolvedSlug);
     if (!idsResult.ok) {
       return jsonResponse(idsResult.statusCode || 400, { error: idsResult.error });
     }
     crmIds = idsResult;
-    utmDefaults = landingUtmDefaults(landingConfig[slugResult.slug]);
+    landingUtm = pickLandingUtmFields(landingConfig[resolvedSlug] || {});
   } else {
     crmIds = resolveCrmIds('');
   }
@@ -302,11 +273,12 @@ async function createLead(data) {
     mobile_number,
     remarks,
     name,
-    utm_source: optionalUtmField(data, 'utm_source', utmDefaults),
-    utm_category: optionalUtmField(data, 'utm_category', utmDefaults),
-    utm_campaign: optionalUtmField(data, 'utm_campaign', utmDefaults),
-    lead_source: optionalUtmField(data, 'lead_source', utmDefaults),
-    utm_source_url: optionalUtmField(data, 'utm_source_url', utmDefaults),
+    // Campaign UTMs only from crm-lead-routing.json — clients send slug via utm_source_url
+    utm_source: landingUtm.utm_source,
+    utm_category: landingUtm.utm_category,
+    utm_campaign: landingUtm.utm_campaign,
+    lead_source: landingUtm.lead_source,
+    utm_source_url: landingUtm.utm_source_url || resolvedSlug,
   };
 
   const crmUrl = process.env.CRM_LEAD_URL || DEFAULTS.CRM_LEAD_URL;
