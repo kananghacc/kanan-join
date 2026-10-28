@@ -16,6 +16,7 @@ const REQUIRED_SLUGS = [
   'uk',
   'us',
   'germany',
+  'german-language',
   'dubai',
   'h1b-canada',
   'to-canada-from-vadodara',

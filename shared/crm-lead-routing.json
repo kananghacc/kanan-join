@@ -44,6 +44,16 @@
     "lead_source": "Google",
     "utm_source_url": "germany"
   },
+  "german-language": {
+    "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
+    "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
+    "owner_id": "60dff5dc-4417-48e8-a77a-d78a6c967525",
+    "utm_source": "Google",
+    "utm_category": "paid_lead",
+    "utm_campaign": "germany",
+    "lead_source": "Google",
+    "utm_source_url": "german-language"
+  },
   "dubai": {
     "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
     "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
