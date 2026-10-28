@@ -28,6 +28,7 @@ LANDING_DIRS=(
   "to-canada-from-vadodara"
   "australia"
   "germany"
+  "german-language"
   "spoken-english"
   "spoken-english-for-college-students"
   "english-course-for-working-professionals"

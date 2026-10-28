@@ -484,6 +484,17 @@
   to = "/samash/index.html"
   status = 200
 
+# German Language landing
+[[redirects]]
+  from = "/german-language"
+  to = "/german-language/"
+  status = 200
+
+[[redirects]]
+  from = "/german-language/*"
+  to = "/german-language/index.html"
+  status = 200
+
 # Germany landing
 [[redirects]]
   from = "/germany"
