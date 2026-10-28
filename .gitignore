@@ -172,3 +172,6 @@ vite.config.ts
 # dist/
 build/project-uk/
 dist/
+
+# SAM local build artifacts
+infrastructure/submit-lead/.aws-sam/
