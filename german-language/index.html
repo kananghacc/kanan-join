@@ -96,11 +96,6 @@
       margin: auto;
     }
 
-    #form-container iframe {
-      border-radius: 8px;
-      border: none;
-    }
-
     .shadow-pop {
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     }
@@ -109,6 +104,7 @@
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     }
   </style>
+    <link rel="stylesheet" href="/shared/kanan-lead-form.css" />
     <script defer src="https://smoky-nuthatch.pikapod.net/script.js" data-website-id="7c6e1e05-f8f8-4d33-ba6d-c1e60e7cba9f"></script>
     <script src="/shared/floating-chat-gate.js"></script>
 </head>
@@ -144,9 +140,6 @@
         <button onclick="openConsultationForm()"
           class="inline-flex items-center rounded-full px-4 py-2 text-white bg-brand hover:bg-brand-dark transition shadow-pop text-sm font-semibold">Book
           a Demo</button>
-        <a href="https://api.whatsapp.com/send/?phone=919228122555&text=Hi,%20Can%20you%20share%20more%20details%20about%20German%20Language%20training%20program"
-          target="_blank" rel="noopener noreferrer"
-          class="hidden sm:inline-flex items-center rounded-full px-4 py-2 text-white bg-green-600 hover:bg-green-700 transition shadow-pop text-sm font-semibold">WhatsApp</a>
       </div>
     </div>
   </header>
@@ -249,11 +242,6 @@
               </svg>
               Book a Demo
             </button>
-            <a href="https://api.whatsapp.com/send/?phone=919228122555&text=Hi,%20Can%20you%20share%20more%20details%20about%20German%20training%20program"
-              target="_blank" rel="noopener noreferrer"
-              class="inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 bg-green-600 text-white font-bold shadow-lg hover:shadow-xl hover:bg-green-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-600/50">
-              WhatsApp
-            </a>
             <a href="#programs"
               class="inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 border-2 border-black/10 text-ink font-semibold hover:bg-black/5 hover:border-black/20 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-black/20">
               View Programs
@@ -273,24 +261,39 @@
         </div>
 
         <div class="relative z-10">
-          <!-- Mobile Form Section (Tally.so form) -->
+          <!-- Mobile Form Section -->
           <div id="mobile-form-section"
             class="md:hidden rounded-2xl p-6 bg-white/95 backdrop-blur-sm shadow-pop border border-white/20">
             <div class="text-center mb-6">
               <h3 class="text-2xl font-bold text-ink mb-2">Book Your Free Demo Class</h3>
-              <p class="text-black/70">Fill the form below to book your free consultation</p>
+              <p class="text-black/70">Share your details and a Kanan counsellor will contact you shortly.</p>
             </div>
-
-            <div class="w-full">
-              <div id="mobile-form-container"
-                style="border-radius: 8px; padding: 16px; background: white; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-                <iframe
-                  data-tally-src="https://tally.so/embed/wdL4lo?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-                  loading="lazy" width="100%" height="320" frameborder="0" marginheight="0" marginwidth="0"
-                  title="Register For Free 1:1 Demo Class"></iframe>
-                <script>var d = document, w = "https://tally.so/widgets/embed.js", v = function () { "undefined" != typeof Tally ? Tally.loadEmbeds() : d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function (e) { e.src = e.dataset.tallySrc })) }; if ("undefined" != typeof Tally) v(); else if (d.querySelector('script[src="' + w + '"]') == null) { var s = d.createElement("script"); s.src = w, s.onload = v, s.onerror = v, d.body.appendChild(s); }</script>
+            <form class="kanan-lead-form kanan-lead-form--brand" data-kanan-lead-form novalidate
+              data-thank-you="/german-language/thank-you.html"
+              data-utm-source-url="german-language">
+              <div class="kanan-field">
+                <label for="gl-mobile-lead-name">Full Name</label>
+                <input id="gl-mobile-lead-name" name="name" type="text" required autocomplete="name"
+                  placeholder="Your full name" />
               </div>
-            </div>
+              <div class="kanan-field">
+                <label for="gl-mobile-lead-mobile">Mobile Number</label>
+                <input id="gl-mobile-lead-mobile" name="mobile_number" type="tel" required autocomplete="tel"
+                  placeholder="e.g. 9876543210 (10-digit mobile)" />
+              </div>
+              <div class="kanan-field">
+                <label for="gl-mobile-lead-email">Email</label>
+                <input id="gl-mobile-lead-email" name="email" type="email" required autocomplete="email"
+                  placeholder="you@example.com" />
+              </div>
+              <div class="kanan-field">
+                <label for="gl-mobile-lead-remarks">Preferred Level / Goal</label>
+                <input id="gl-mobile-lead-remarks" name="remarks" type="text" required
+                  placeholder="e.g. A1 to B2, Winter 2026 intake" />
+              </div>
+              <button type="submit" class="kanan-submit-btn">Book Free Demo</button>
+              <div class="kanan-form-error" role="alert"></div>
+            </form>
           </div>
 
           <!-- Desktop Hero Image -->
@@ -753,28 +756,47 @@
     </div>
   </section>
 
-  <!-- Consultation Form Modal (Standard Kanan Tally Embed) -->
+  <!-- Consultation Form Modal -->
   <div id="consultation-modal" class="modal">
     <div class="modal-content">
-      <div class="flex justify-between items-center mb-6">
-        <h3 class="text-xl font-bold text-gray-900">Book Your Free German Demo Class</h3>
-        <button onclick="closeConsultationForm()" class="text-gray-400 hover:text-gray-600 transition-colors">
+      <div class="mb-5 flex items-start justify-between gap-4">
+        <div>
+          <h3 class="text-xl font-bold text-gray-900">Book Your Free German Demo Class</h3>
+          <p class="mt-1 text-sm text-black/60">Share your details and a Kanan counsellor will contact you shortly.</p>
+        </div>
+        <button type="button" onclick="closeConsultationForm()" class="text-gray-400 hover:text-gray-600 transition-colors"
+          aria-label="Close form">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
           </svg>
         </button>
       </div>
-
-      <div class="w-full">
-        <div id="form-container"
-          style="border-radius: 8px; padding: 24px; background: white; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-          <iframe
-            data-tally-src="https://tally.so/embed/wdL4lo?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-            loading="lazy" width="100%" height="320" frameborder="0" marginheight="0" marginwidth="0"
-            title="Register For Free 1:1 Demo Class"></iframe>
-          <script>var d = document, w = "https://tally.so/widgets/embed.js", v = function () { "undefined" != typeof Tally ? Tally.loadEmbeds() : d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function (e) { e.src = e.dataset.tallySrc })) }; if ("undefined" != typeof Tally) v(); else if (d.querySelector('script[src="' + w + '"]') == null) { var s = d.createElement("script"); s.src = w, s.onload = v, s.onerror = v, d.body.appendChild(s); }</script>
+      <form class="kanan-lead-form kanan-lead-form--brand" data-kanan-lead-form novalidate
+        data-thank-you="/german-language/thank-you.html"
+        data-utm-source-url="german-language">
+        <div class="kanan-field">
+          <label for="gl-modal-lead-name">Full Name</label>
+          <input id="gl-modal-lead-name" name="name" type="text" required autocomplete="name"
+            placeholder="Your full name" />
         </div>
-      </div>
+        <div class="kanan-field">
+          <label for="gl-modal-lead-mobile">Mobile Number</label>
+          <input id="gl-modal-lead-mobile" name="mobile_number" type="tel" required autocomplete="tel"
+            placeholder="e.g. 9876543210 (10-digit mobile)" />
+        </div>
+        <div class="kanan-field">
+          <label for="gl-modal-lead-email">Email</label>
+          <input id="gl-modal-lead-email" name="email" type="email" required autocomplete="email"
+            placeholder="you@example.com" />
+        </div>
+        <div class="kanan-field">
+          <label for="gl-modal-lead-remarks">Preferred Level / Goal</label>
+          <input id="gl-modal-lead-remarks" name="remarks" type="text" required
+            placeholder="e.g. A1 to B2, Winter 2026 intake" />
+        </div>
+        <button type="submit" class="kanan-submit-btn">Book Free Demo</button>
+        <div class="kanan-form-error" role="alert"></div>
+      </form>
     </div>
   </div>
 
@@ -889,6 +911,9 @@
       initializeModal();
     }
   </script>
+  <script src="/shared/kanan-crm-config.js"></script>
+  <script src="/shared/kanan-lead-validation.js"></script>
+  <script src="/shared/kanan-lead-form.js"></script>
 </body>
 
 </html>
