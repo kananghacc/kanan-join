@@ -1,23 +1,23 @@
 #!/usr/bin/env python3
 import argparse
 import os
-import posixpath
-import sys
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import unquote
+
+
+# Local mirror of the Tailwind Play CDN so pages still style when
+# https://cdn.tailwindcss.com is blocked or unreachable.
+LOCAL_TAILWIND = "/shared/tailwindcdn.js"
+CDN_TAILWIND_URLS = (
+    "https://cdn.tailwindcss.com",
+    "http://cdn.tailwindcss.com",
+)
 
 
 class MultiRootHTTPRequestHandler(SimpleHTTPRequestHandler):
     """
     A SimpleHTTPRequestHandler that can serve multiple directories mounted
     at specific URL prefixes (e.g., /canada -> ./canada).
-
-    Example mounts:
-        {
-            "/canada": "/Applications/MAMP/htdocs/landing-3/canada",
-            "/us": "/Applications/MAMP/htdocs/landing-3/us",
-            "/ielts-online-coaching": "/Applications/MAMP/htdocs/landing-3/ielts-online-coaching",
-        }
     """
 
     def __init__(self, *args, mounts=None, **kwargs):
@@ -83,19 +83,54 @@ class MultiRootHTTPRequestHandler(SimpleHTTPRequestHandler):
             final_path += os.sep
         return final_path
 
+    def do_GET(self):
+        path = unquote(self.path.split('?', 1)[0].split('#', 1)[0])
+        fs_path = self.translate_path(self.path)
+
+        # Directory indexes resolve to index.html
+        if os.path.isdir(fs_path):
+            index = os.path.join(fs_path, 'index.html')
+            if os.path.isfile(index):
+                fs_path = index
+            else:
+                return super().do_GET()
+
+        if fs_path.endswith('.html') and os.path.isfile(fs_path):
+            try:
+                with open(fs_path, 'rb') as f:
+                    body = f.read()
+            except OSError:
+                self.send_error(404, "File not found")
+                return
+
+            text = body.decode('utf-8', errors='surrogateescape')
+            rewritten = text
+            for cdn_url in CDN_TAILWIND_URLS:
+                rewritten = rewritten.replace(cdn_url, LOCAL_TAILWIND)
+            out = rewritten.encode('utf-8', errors='surrogateescape')
+
+            self.send_response(200)
+            self.send_header('Content-Type', 'text/html; charset=utf-8')
+            self.send_header('Content-Length', str(len(out)))
+            self.send_header('Cache-Control', 'no-store')
+            self.end_headers()
+            self.wfile.write(out)
+            return
+
+        return super().do_GET()
+
 
 def main():
     parser = argparse.ArgumentParser(description='Multi-root static dev server')
     parser.add_argument('--port', type=int, default=8080, help='Port to listen on (default: 8080)')
     parser.add_argument('--host', type=str, default='0.0.0.0', help='Host to bind (default: 0.0.0.0)')
 
-    # Allow overriding or adding mounts via env if desired in future
     args = parser.parse_args()
 
     base_dir = os.path.abspath(os.path.dirname(__file__))
 
     mounts = {}
-    
+
     # Automatically discover landing page directories (any dir with index.html)
     for item in os.listdir(base_dir):
         item_path = os.path.join(base_dir, item)
@@ -103,12 +138,17 @@ def main():
             if os.path.exists(os.path.join(item_path, 'index.html')):
                 mounts[f'/{item}'] = item_path
 
-    # Keep explicit mounts if any are special, but here we cover them all
-    # Adding some that might not have index.html at root but still need to be served
-    special_mounts = {
-        # Add any special mappings here if needed
-    }
-    mounts.update(special_mounts)
+    # Shared assets (CRM form CSS/JS + local Tailwind mirror)
+    shared_dir = os.path.join(base_dir, 'shared')
+    if os.path.isdir(shared_dir):
+        mounts['/shared'] = shared_dir
+
+    local_tw = os.path.join(shared_dir, 'tailwindcdn.js')
+    if not os.path.isfile(local_tw):
+        print(
+            f"WARNING: {local_tw} missing. Pages depend on Tailwind utilities "
+            f"and will look unstyled if https://cdn.tailwindcss.com is blocked."
+        )
 
     handler_factory = lambda *h_args, **h_kwargs: MultiRootHTTPRequestHandler(
         *h_args, mounts=mounts, **h_kwargs
@@ -116,7 +156,7 @@ def main():
 
     httpd = ThreadingHTTPServer((args.host, args.port), handler_factory)
     print(f"Serving multiple folders on http://{args.host}:{args.port}")
-    # Sort for cleaner output
+    print(f"  Tailwind CDN rewritten to {LOCAL_TAILWIND} for local HTML")
     for prefix in sorted(mounts.keys()):
         print(f"  {prefix} -> {mounts[prefix]}")
     try:
@@ -129,10 +169,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
-

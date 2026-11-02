@@ -68,6 +68,26 @@
     setFormError(form, '');
   }
 
+  function restoreSubmitButton(form) {
+    var submitBtn = form.querySelector('button[type="submit"]');
+    if (!submitBtn) return;
+    submitBtn.disabled = false;
+    if (submitBtn.dataset.originalText) {
+      submitBtn.textContent = submitBtn.dataset.originalText;
+    }
+  }
+
+  function resetLeadForm(form) {
+    if (!form || typeof form.reset !== 'function') return;
+    form.reset();
+    clearFieldErrors(form);
+    restoreSubmitButton(form);
+  }
+
+  function resetAllLeadForms() {
+    document.querySelectorAll('[data-kanan-lead-form]').forEach(resetLeadForm);
+  }
+
   function validateLeadFields(form, name, email, mobile_number, remarks) {
     clearFieldErrors(form);
     var valid = true;
@@ -167,16 +187,16 @@
         throw new Error((result && result.error) || 'Something went wrong. Please try again.');
       }
 
+      // Clear values before redirect so browser back / bfcache restores an empty form.
+      resetLeadForm(form);
+
       var thankYou = form.dataset.thankYou;
       if (thankYou) {
         window.location.href = thankYou;
       }
     } catch (err) {
       setFormError(form, err.message || 'Something went wrong. Please try again.');
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = submitBtn.dataset.originalText || 'Submit';
-      }
+      restoreSubmitButton(form);
     }
   }
 
@@ -193,10 +213,22 @@
     document.querySelectorAll('[data-kanan-lead-form]').forEach(function (form) {
       if (form.dataset.kananBound === '1') return;
       form.dataset.kananBound = '1';
+      // Avoid browser restoring previously submitted values on back navigation.
+      form.setAttribute('autocomplete', 'off');
       bindFieldClearOnInput(form);
       form.addEventListener('submit', handleLeadSubmit);
     });
   }
+
+  // Clear restored values when the user returns via browser Back (bfcache or history).
+  window.addEventListener('pageshow', function (event) {
+    var nav = typeof performance !== 'undefined' && performance.getEntriesByType
+      ? performance.getEntriesByType('navigation')[0]
+      : null;
+    if (event.persisted || (nav && nav.type === 'back_forward')) {
+      resetAllLeadForms();
+    }
+  });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initKananLeadForms);

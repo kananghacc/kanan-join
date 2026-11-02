@@ -67,6 +67,7 @@ const UTM_CONFIG_KEYS = [
   'utm_source',
   'utm_category',
   'utm_campaign',
+  'utm_medium',
   'lead_source',
   'utm_source_url',
 ];
@@ -102,7 +103,7 @@ function normalizeLandingConfig(parsed) {
     ) {
       continue;
     }
-    /** @type {{ organisation_id: string, branch_id: string, owner_id: string, utm_source?: string, utm_category?: string, utm_campaign?: string, lead_source?: string, utm_source_url?: string }} */
+    /** @type {{ organisation_id: string, branch_id: string, owner_id: string, utm_source?: string, utm_category?: string, utm_campaign?: string, utm_medium?: string, lead_source?: string, utm_source_url?: string }} */
     const entry = { organisation_id, branch_id, owner_id };
     for (const utmKey of UTM_CONFIG_KEYS) {
       const utmVal = String(value[utmKey] || '').trim();
@@ -277,13 +278,20 @@ async function createLead(data) {
     utm_source: landingUtm.utm_source,
     utm_category: landingUtm.utm_category,
     utm_campaign: landingUtm.utm_campaign,
+    utm_medium: landingUtm.utm_medium,
     lead_source: landingUtm.lead_source,
     utm_source_url: landingUtm.utm_source_url || resolvedSlug,
   };
 
   const crmUrl = process.env.CRM_LEAD_URL || DEFAULTS.CRM_LEAD_URL;
+  const crmTimeoutMs = Number(process.env.CRM_FETCH_TIMEOUT_MS || 12000);
 
   try {
+    console.info('CRM lead create start', {
+      slug: resolvedSlug || null,
+      hasEmail: Boolean(email),
+    });
+
     const crmResponse = await fetch(crmUrl, {
       method: 'POST',
       headers: {
@@ -291,6 +299,7 @@ async function createLead(data) {
         'x-api-key': apiKey,
       },
       body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(crmTimeoutMs),
     });
 
     const responseText = await crmResponse.text();
@@ -309,10 +318,28 @@ async function createLead(data) {
       });
     }
 
-    return jsonResponse(200, { ok: true, data: crmBody });
+    // Keep Function URL responses tiny — echoing the full CRM entity has caused
+    // intermittent platform 502s ("Internal Server Error") with no function logs.
+    const leadId =
+      crmBody &&
+      typeof crmBody === 'object' &&
+      crmBody.data &&
+      typeof crmBody.data === 'object'
+        ? crmBody.data.id || null
+        : null;
+
+    console.info('CRM lead create ok', { slug: resolvedSlug || null, leadId });
+    return jsonResponse(200, { ok: true, id: leadId });
   } catch (err) {
-    console.error('CRM request error', err);
-    return jsonResponse(502, { error: 'Failed to reach CRM' });
+    const timedOut =
+      err &&
+      (err.name === 'TimeoutError' ||
+        err.name === 'AbortError' ||
+        /aborted|timeout/i.test(String(err.message || err)));
+    console.error('CRM request error', timedOut ? 'timeout' : err);
+    return jsonResponse(502, {
+      error: timedOut ? 'CRM request timed out' : 'Failed to reach CRM',
+    });
   }
 }
 
@@ -321,24 +348,29 @@ async function createLead(data) {
  * @returns {Promise<{statusCode: number, headers: object, body: string}>}
  */
 async function handleSubmitLead(event) {
-  const method = getHttpMethod(event);
-
-  if (method === 'OPTIONS') {
-    return { statusCode: 204, headers: responseHeaders(), body: '' };
-  }
-
-  if (method !== 'POST') {
-    return jsonResponse(405, { error: 'Method not allowed' });
-  }
-
-  let data;
   try {
-    data = parseBody(event);
-  } catch {
-    return jsonResponse(400, { error: 'Invalid JSON body' });
-  }
+    const method = getHttpMethod(event);
 
-  return createLead(data);
+    if (method === 'OPTIONS') {
+      return { statusCode: 204, headers: responseHeaders(), body: '' };
+    }
+
+    if (method !== 'POST') {
+      return jsonResponse(405, { error: 'Method not allowed' });
+    }
+
+    let data;
+    try {
+      data = parseBody(event);
+    } catch {
+      return jsonResponse(400, { error: 'Invalid JSON body' });
+    }
+
+    return await createLead(data);
+  } catch (err) {
+    console.error('submit-lead unhandled error', err);
+    return jsonResponse(500, { error: 'Internal server error' });
+  }
 }
 
 module.exports = {

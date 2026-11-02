@@ -6,8 +6,20 @@
     "utm_source": "Google",
     "utm_category": "study_aus",
     "utm_campaign": "Study_in_Australia",
+    "utm_medium": "-",
     "lead_source": "Google",
     "utm_source_url": "australia"
+  },
+  "settle-in-canada": {
+    "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
+    "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
+    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1",
+    "utm_source": "organic",
+    "utm_category": "paid_study_in_canada",
+    "utm_campaign": "settle-in-canada",
+    "utm_medium": "canada-visa",
+    "lead_source": "Website",
+    "utm_source_url": "settle-in-canada"
   },
   "canada": {
     "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
@@ -16,6 +28,7 @@
     "utm_source": "Google",
     "utm_category": "paid_study_in_canada",
     "utm_campaign": "Study_In_Canada",
+    "utm_medium": "-",
     "lead_source": "Google",
     "utm_source_url": "canada"
   },
@@ -26,13 +39,15 @@
     "utm_source": "Google",
     "utm_category": "paid_study_in_uk",
     "utm_campaign": "Study_In_Uk",
+    "utm_medium": "-",
     "lead_source": "Google",
     "utm_source_url": "uk"
   },
   "us": {
     "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
     "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
-    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1"
+    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1",
+    "utm_medium": "-"
   },
   "germany": {
     "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
@@ -41,18 +56,9 @@
     "utm_source": "Google",
     "utm_category": "paid_study_in_Germany",
     "utm_campaign": "germany",
+    "utm_medium": "-",
     "lead_source": "Google",
     "utm_source_url": "germany"
-  },
-  "german-language": {
-    "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
-    "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
-    "owner_id": "60dff5dc-4417-48e8-a77a-d78a6c967525",
-    "utm_source": "Google",
-    "utm_category": "paid_lead",
-    "utm_campaign": "germany",
-    "lead_source": "Google",
-    "utm_source_url": "german-language"
   },
   "dubai": {
     "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
@@ -61,13 +67,15 @@
     "utm_source": "Google",
     "utm_category": "study_dubai",
     "utm_campaign": "Study_in_Dubai",
+    "utm_medium": "-",
     "lead_source": "Google",
     "utm_source_url": "dubai"
   },
   "h1b-canada": {
     "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
     "branch_id": "c67933e8-f0ab-4078-81aa-50be5dcf1e74",
-    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1"
+    "owner_id": "ec3758dd-6dce-40e7-be28-dcb5c585fdc1",
+    "utm_medium": "-"
   },
   "to-canada-from-vadodara": {
     "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
@@ -76,6 +84,7 @@
     "utm_source": "Google",
     "utm_category": "to_canada_from_vadodara",
     "utm_campaign": "canada_from_vadodara",
+    "utm_medium": "-",
     "lead_source": "Google",
     "utm_source_url": "to-canada-from-vadodara"
   },
@@ -86,8 +95,20 @@
     "utm_source": "Google",
     "utm_category": "paid_lead",
     "utm_campaign": "Study_French_Learning",
+    "utm_medium": "-",
     "lead_source": "google",
     "utm_source_url": "study-french-learning"
+  },
+  "german-language": {
+    "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
+    "branch_id": "13d597e7-13ca-4add-84c1-5f8570d919b5",
+    "owner_id": "5c495246-87f1-45bc-ac09-38c40f8f9b27",
+    "utm_source": "Google",
+    "utm_category": "paid_lead",
+    "utm_campaign": "germany-language",
+    "utm_medium": "-",
+    "lead_source": "Google",
+    "utm_source_url": "german-language"
   },
   "study-french-india": {
     "organisation_id": "b0423abb-72d5-48ab-b67e-79834ef878e8",
@@ -96,6 +117,7 @@
     "utm_source": "Google",
     "utm_category": "paid_study_french_india",
     "utm_campaign": "French_Education_India",
+    "utm_medium": "-",
     "lead_source": "google",
     "utm_source_url": "study-french-india"
   },
@@ -106,6 +128,7 @@
     "utm_source": "Google",
     "utm_category": "paid_lead",
     "utm_campaign": "IELTS_Chennai",
+    "utm_medium": "-",
     "lead_source": "Google",
     "utm_source_url": "ielts-chennai"
   },
@@ -116,6 +139,7 @@
     "utm_source": "Google",
     "utm_category": "paid_study_french",
     "utm_campaign": "French_Course_Leads",
+    "utm_medium": "-",
     "lead_source": "google",
     "utm_source_url": "study-french"
   },
@@ -126,6 +150,7 @@
     "utm_source": "Google",
     "utm_category": "paid_lead",
     "utm_campaign": "IELTS_Online",
+    "utm_medium": "-",
     "lead_source": "google",
     "utm_source_url": "ielts-online-training"
   }
