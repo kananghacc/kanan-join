@@ -68,6 +68,12 @@
   status = 200
 
 [[redirects]]
+  from = "/ielts-online-coaching-tn"
+  to = "/ielts-online-coaching-tn/"
+  status = 200
+
+
+[[redirects]]
   from = "/ielts-online-training"
   to = "/ielts-online-training/"
   status = 200
@@ -200,6 +206,12 @@
   from = "/ielts-online-coaching-gcc/*"
   to = "/ielts-online-coaching-gcc/index.html"
   status = 200
+
+[[redirects]]
+  from = "/ielts-online-coaching-tn/*"
+  to = "/ielts-online-coaching-tn/index.html"
+  status = 200
+
 
 [[redirects]]
   from = "/ielts-online-training/*"

@@ -13,6 +13,7 @@ LANDING_DIRS=(
   "ielts-online"
   "ielts-online-coaching"
   "ielts-online-coaching-gcc"
+  "ielts-online-coaching-tn"
   "ielts-online-training"
   "ielts-crash-course"
   "ielts-new"
