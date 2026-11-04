@@ -25,6 +25,7 @@ const REQUIRED_SLUGS = [
   'ielts-chennai',
   'study-french',
   'ielts-online-training',
+  'gre-coaching-online',
 ];
 
 const ROUTING_PATH = path.join(ROOT, 'shared/crm-lead-routing.json');

@@ -12,6 +12,30 @@ CDN_TAILWIND_URLS = (
     "https://cdn.tailwindcss.com",
     "http://cdn.tailwindcss.com",
 )
+CRM_CONFIG_PLACEHOLDER = "__CRM_SUBMIT_URL__"
+
+
+def load_env_file(path):
+    """Minimal .env loader (KEY=VALUE lines). Does not override existing env."""
+    if not os.path.isfile(path):
+        return
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            for raw in f:
+                line = raw.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, value = line.split("=", 1)
+                key = key.strip()
+                value = value.strip().strip("'").strip('"')
+                if key and key not in os.environ:
+                    os.environ[key] = value
+    except OSError:
+        pass
+
+
+def resolve_crm_submit_url():
+    return (os.environ.get("CRM_SUBMIT_URL") or "").strip()
 
 
 class MultiRootHTTPRequestHandler(SimpleHTTPRequestHandler):
@@ -117,6 +141,29 @@ class MultiRootHTTPRequestHandler(SimpleHTTPRequestHandler):
             self.wfile.write(out)
             return
 
+        # Inject CRM_SUBMIT_URL from .env into the Amplify placeholder for local forms.
+        if fs_path.endswith('kanan-crm-config.js') and os.path.isfile(fs_path):
+            try:
+                with open(fs_path, 'rb') as f:
+                    body = f.read()
+            except OSError:
+                self.send_error(404, "File not found")
+                return
+
+            text = body.decode('utf-8', errors='surrogateescape')
+            crm_url = resolve_crm_submit_url()
+            if crm_url and CRM_CONFIG_PLACEHOLDER in text:
+                text = text.replace(CRM_CONFIG_PLACEHOLDER, crm_url)
+            out = text.encode('utf-8', errors='surrogateescape')
+
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/javascript; charset=utf-8')
+            self.send_header('Content-Length', str(len(out)))
+            self.send_header('Cache-Control', 'no-store')
+            self.end_headers()
+            self.wfile.write(out)
+            return
+
         return super().do_GET()
 
 
@@ -128,6 +175,8 @@ def main():
     args = parser.parse_args()
 
     base_dir = os.path.abspath(os.path.dirname(__file__))
+    load_env_file(os.path.join(base_dir, '.env'))
+    crm_submit_url = resolve_crm_submit_url()
 
     mounts = {}
 
@@ -157,6 +206,12 @@ def main():
     httpd = ThreadingHTTPServer((args.host, args.port), handler_factory)
     print(f"Serving multiple folders on http://{args.host}:{args.port}")
     print(f"  Tailwind CDN rewritten to {LOCAL_TAILWIND} for local HTML")
+    if crm_submit_url:
+        print(f"  CRM submit URL injected into /shared/kanan-crm-config.js -> {crm_submit_url}")
+    else:
+        print(
+            "  WARNING: CRM_SUBMIT_URL not set in .env — forms fall back to /api/submit-lead"
+        )
     for prefix in sorted(mounts.keys()):
         print(f"  {prefix} -> {mounts[prefix]}")
     try:
