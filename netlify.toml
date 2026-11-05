@@ -167,6 +167,21 @@
   status = 301
 
 [[redirects]]
+  from = "/ireland"
+  to = "/ireland/"
+  status = 301
+
+[[redirects]]
+  from = "/ireland/thank-you"
+  to = "/ireland/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/ireland/*"
+  to = "/ireland/index.html"
+  status = 200
+
+[[redirects]]
   from = "/to-canada-from-vadodara"
   to = "/to-canada-from-vadodara/"
   status = 301

@@ -28,6 +28,7 @@ LANDING_DIRS=(
   "h1b-canada"
   "to-canada-from-vadodara"
   "australia"
+  "ireland"
   "germany"
   "german-language"
   "spoken-english"
