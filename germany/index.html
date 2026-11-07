@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="overflow-x-hidden">
 
 <head>
     <!-- Google Tag Manager -->
@@ -148,6 +148,39 @@
                 display: block;
             }
         }
+
+        /* Mobile-first Form & Modal Layout */
+        @media (max-width: 640px) {
+            .kanan-lead-form .kanan-field,
+            .kanan-lead-form > div:not(.kanan-form-error) {
+                margin-bottom: 0.75rem !important;
+            }
+            .kanan-lead-form input,
+            .kanan-lead-form select,
+            .kanan-lead-form textarea {
+                padding: 0.625rem 0.875rem !important;
+                font-size: 16px !important; /* Prevents auto-zoom on iOS */
+                border-radius: 0.625rem !important;
+            }
+            .kanan-lead-form .kanan-submit-btn,
+            .kanan-lead-form button[type='submit'] {
+                padding: 0.75rem 1rem !important;
+                font-size: 0.95rem !important;
+            }
+            .kanan-form-heading {
+                font-size: 1.15rem !important;
+            }
+            .kanan-form-subheading {
+                font-size: 0.8rem !important;
+                margin-bottom: 0.875rem !important;
+            }
+            .modal-content {
+                padding: 1.25rem 1rem 1rem !important;
+                border-radius: 1rem !important;
+                max-width: 95% !important;
+                width: 95% !important;
+            }
+        }
     </style>
 
     <!-- Tailwind Config -->
@@ -169,7 +202,7 @@
 <script src="/shared/floating-chat-gate.js"></script>
 </head>
 
-<body class="min-h-screen bg-white font-body">
+<body class="min-h-screen bg-white font-body overflow-x-hidden w-full relative">
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5TS75DC" height="0" width="0"
             style="display:none;visibility:hidden"></iframe></noscript>
@@ -178,14 +211,14 @@
     <!-- Header -->
     <header class="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+            <div class="flex justify-between items-center h-14 sm:h-16 gap-2">
                 <div class="flex items-center space-x-2">
-                    <img src="kanan-logo.svg" alt="Kanan.co" class="h-8" />
+                    <img src="kanan-logo.svg" alt="Kanan.co" class="h-6 sm:h-8 w-auto flex-shrink-0" />
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
                     <!-- Phone number - hidden on very small screens, visible on sm and up -->
                     <a href="tel:+91 92281 22552"
-                        class="hidden sm:flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors font-body">
+                        class="hidden sm:flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors font-body flex-shrink-0">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
@@ -195,7 +228,7 @@
                     </a>
                     <!-- Mobile phone icon - visible only on very small screens -->
                     <a href="tel:+91 92281 22552"
-                        class="sm:hidden flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-blue-100 text-gray-700 hover:text-blue-600 rounded-full transition-all duration-200 font-body">
+                        class="sm:hidden flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-gray-100 hover:bg-blue-100 text-gray-700 hover:text-blue-600 rounded-full transition-all duration-200 font-body flex-shrink-0">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
@@ -203,9 +236,9 @@
                         </svg>
                     </a>
                     <button onclick="openConsultationForm()"
-                        class="bg-blue-600 text-white px-3 sm:px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition-colors font-body text-sm sm:text-base whitespace-nowrap">
+                        class="bg-blue-600 text-white px-2.5 sm:px-6 py-1.5 sm:py-2 rounded-full font-semibold hover:bg-blue-700 transition-colors font-body text-xs sm:text-base whitespace-nowrap flex-shrink-0">
                         <span class="hidden sm:inline">Book Free Consultation</span>
-                        <span class="sm:hidden">Book Free Consultation</span>
+                        <span class="sm:hidden">Consult</span>
                     </button>
                 </div>
             </div>
@@ -1243,19 +1276,12 @@
                 <p class="text-xl text-gray-600 font-body">Expert guidance from industry professionals</p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8 mb-8">
+            <div class="grid md:grid-cols-2 max-w-3xl mx-auto gap-8 mb-8">
                 <div class="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-lg transition-shadow">
                     <img src="images/trainer-images/786493938-anjali-thakur-b2b-associate-hod.jpg" alt="Anjali Thakur"
                         class="w-24 h-24 rounded-full object-cover mx-auto mb-6" />
                     <h3 class="text-xl font-bold text-gray-900 mb-2 font-heading">Anjali Thakur</h3>
                     <div class="text-blue-600 font-medium mb-2 font-body">B2B Associate HOD</div>
-                </div>
-
-                <div class="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-lg transition-shadow">
-                    <img src="images/trainer-images/786493942-chetan-sharma-b2b-executive.jpg" alt="Chetan Sharma"
-                        class="w-24 h-24 rounded-full object-cover mx-auto mb-6" />
-                    <h3 class="text-xl font-bold text-gray-900 mb-2 font-heading">Chetan Sharma</h3>
-                    <div class="text-blue-600 font-medium mb-2 font-body">B2B Executive</div>
                 </div>
 
                 <div class="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-lg transition-shadow">
@@ -1306,7 +1332,7 @@
                     </div>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900 font-heading">
-                    Fall 2026 admissions close soon
+                    Fall 2027 admissions close soon
                 </h2>
                 <p class="text-lg text-gray-600 font-body">Book your free strategy call now.</p>
                 <button onclick="openConsultationForm()"
@@ -1459,7 +1485,7 @@
                                               </div>
                                               <div class="kanan-field">
                                                 <label for="germany-lead-remarks">Preferred Intake / Program Interest</label>
-                                                <input id="germany-lead-remarks" name="remarks" type="text" required placeholder="e.g. Winter 2026, MS" />
+                                                <input id="germany-lead-remarks" name="remarks" type="text" required placeholder="e.g. Winter 2027, MS" />
                                               </div>
                                               <button type="submit" class="kanan-submit-btn">Book Free Consultation</button>
                                               <div class="kanan-form-error" role="alert"></div>
@@ -1727,7 +1753,7 @@
     <script>
         // Countdown functionality
         function updateCountdown() {
-            const deadline = new Date('2026-03-01T00:00:00');
+            const deadline = new Date('2027-03-01T00:00:00');
             const now = new Date();
             const timeDiff = deadline.getTime() - now.getTime();
 
