@@ -315,7 +315,7 @@
                     <!-- Creative Student Proof Card with Floating Stats -->
                     <div class="relative bg-white rounded-3xl p-4 sm:p-5 border border-slate-200 shadow-md max-w-xl flex items-center space-x-4">
                         <div class="relative flex-shrink-0">
-                            <img src="images/hero-student.png" alt="PTE Student" class="w-20 h-20 sm:w-24 sm:h-24 object-contain rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200">
+                            <img src="images/college-student.jpg" alt="PTE Student" class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-2xl border border-blue-200 shadow-sm">
                             <span class="absolute -bottom-1 -right-1 bg-emerald-500 border-2 border-white w-4 h-4 rounded-full"></span>
                         </div>
                         <div class="flex-1">
@@ -334,25 +334,37 @@
                         </div>
                     </div>
 
-                    <!-- Accepted Countries Badges -->
-                    <div class="pt-2">
-                        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-2">Accepted Across Global Destinations:</span>
-                        <div class="flex items-center space-x-4">
-                            <div class="flex items-center space-x-1.5 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-sm text-xs font-medium text-slate-700">
-                                <img src="images/canada-flag.png" alt="Canada" class="w-4 h-4 object-contain rounded-full">
-                                <span>Canada (IRCC)</span>
-                            </div>
-                            <div class="flex items-center space-x-1.5 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-sm text-xs font-medium text-slate-700">
-                                <img src="images/australia-flag.png" alt="Australia" class="w-4 h-4 object-contain rounded-full">
-                                <span>Australia (DHA)</span>
-                            </div>
-                            <div class="flex items-center space-x-1.5 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-sm text-xs font-medium text-slate-700">
-                                <img src="images/uk-flag.png" alt="UK" class="w-4 h-4 object-contain rounded-full">
-                                <span>UK (Home Office)</span>
-                            </div>
-                            <div class="flex items-center space-x-1.5 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-sm text-xs font-medium text-slate-700">
-                                <img src="images/usa-flag.png" alt="USA" class="w-4 h-4 object-contain rounded-full">
-                                <span>USA</span>
+                    <!-- Accepted Countries Badges & Primary Action -->
+                    <div class="pt-2 space-y-4">
+                        <!-- Dual CTA buttons in Hero body -->
+                        <div class="flex flex-wrap items-center gap-3.5">
+                            <button type="button" onclick="openPteModal()" class="inline-flex items-center justify-center rounded-full px-8 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm sm:text-base shadow-lg shadow-emerald-600/25 transition-all">
+                                Book Free Demo Class
+                            </button>
+                            <a href="#courses" class="inline-flex items-center justify-center rounded-full px-7 py-3.5 border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-bold text-sm transition-all shadow-sm">
+                                Course Fee: ₹10k–₹15k
+                            </a>
+                        </div>
+
+                        <div>
+                            <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-2">Accepted Across Global Destinations:</span>
+                            <div class="flex items-center space-x-4">
+                                <div class="flex items-center space-x-1.5 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-sm text-xs font-medium text-slate-700">
+                                    <img src="images/canada-flag.png" alt="Canada" class="w-4 h-4 object-contain rounded-full">
+                                    <span>Canada (IRCC)</span>
+                                </div>
+                                <div class="flex items-center space-x-1.5 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-sm text-xs font-medium text-slate-700">
+                                    <img src="images/australia-flag.png" alt="Australia" class="w-4 h-4 object-contain rounded-full">
+                                    <span>Australia (DHA)</span>
+                                </div>
+                                <div class="flex items-center space-x-1.5 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-sm text-xs font-medium text-slate-700">
+                                    <img src="images/uk-flag.png" alt="UK" class="w-4 h-4 object-contain rounded-full">
+                                    <span>UK (Home Office)</span>
+                                </div>
+                                <div class="flex items-center space-x-1.5 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-sm text-xs font-medium text-slate-700">
+                                    <img src="images/usa-flag.png" alt="USA" class="w-4 h-4 object-contain rounded-full">
+                                    <span>USA</span>
+                                </div>
                             </div>
                         </div>
                     </div>
