@@ -30,6 +30,7 @@ LANDING_DIRS=(
   "australia"
   "ireland"
   "new-zealand"
+  "pte"
   "germany"
   "german-language"
   "spoken-english"

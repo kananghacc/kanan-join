@@ -197,6 +197,21 @@
   status = 200
 
 [[redirects]]
+  from = "/pte"
+  to = "/pte/"
+  status = 301
+
+[[redirects]]
+  from = "/pte/thank-you"
+  to = "/pte/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/pte/*"
+  to = "/pte/index.html"
+  status = 200
+
+[[redirects]]
   from = "/to-canada-from-vadodara"
   to = "/to-canada-from-vadodara/"
   status = 301
