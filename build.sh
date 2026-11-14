@@ -29,6 +29,7 @@ LANDING_DIRS=(
   "to-canada-from-vadodara"
   "australia"
   "ireland"
+  "new-zealand"
   "germany"
   "german-language"
   "spoken-english"

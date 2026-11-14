@@ -182,6 +182,21 @@
   status = 200
 
 [[redirects]]
+  from = "/new-zealand"
+  to = "/new-zealand/"
+  status = 301
+
+[[redirects]]
+  from = "/new-zealand/thank-you"
+  to = "/new-zealand/thank-you.html"
+  status = 200
+
+[[redirects]]
+  from = "/new-zealand/*"
+  to = "/new-zealand/index.html"
+  status = 200
+
+[[redirects]]
   from = "/to-canada-from-vadodara"
   to = "/to-canada-from-vadodara/"
   status = 301
