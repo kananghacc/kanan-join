@@ -147,6 +147,7 @@
     </style>
     <script defer src="https://smoky-nuthatch.pikapod.net/script.js" data-website-id="7c6e1e05-f8f8-4d33-ba6d-c1e60e7cba9f"></script>
 <script src="/shared/floating-chat-gate.js"></script>
+<link rel="stylesheet" href="/shared/kanan-lead-form.css" />
 </head>
 <body class="min-h-screen bg-white font-body">
     <!-- Google Tag Manager (noscript) -->
@@ -285,26 +286,46 @@
                   </div>
                 </div>
 
-                <!-- Mobile Form Section (hidden on desktop) -->
-                <div id="mobile-form-section" class="md:hidden rounded-2xl p-6 bg-white/95 backdrop-blur-sm shadow-pop border border-white/20">
-                  <div class="text-center mb-6">
-                    <h3 class="text-2xl font-bold text-ink mb-2">Get Your Free Demo Class</h3>
-                    <p class="text-black/70">Fill the form below to book your free consultation</p>
+                                <!-- Hero Lead Form (Visible directly on both desktop and mobile) -->
+                <div id="hero-form-section" class="rounded-2xl p-6 sm:p-7 bg-white shadow-2xl border border-slate-200 relative z-20">
+                  <div class="text-center mb-5">
+                    <span class="inline-block bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-2">Free 1:1 Demo Class</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900 font-heading">Book Free Consultation</h3>
+                    <p class="text-slate-500 text-xs sm:text-sm mt-1">Counsellor callback within 24 hours · Free & No Spam</p>
                   </div>
 
-                  <!-- Tally.so Form Container -->
-                  <div class="w-full">
-                    <div id="mobile-form-container" style="border-radius: 8px; padding: 16px; background: white; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-                      <!-- Tally.so Form -->
-                      <iframe data-tally-src="https://tally.so/embed/me49yl?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="320" frameborder="0" marginheight="0" marginwidth="0" title="Register For Free 1:1 Demo Class"></iframe>
-                      <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Desktop Hero Image (hidden on mobile) -->
-                <div class="hidden md:block rounded-2xl p-6 bg-white/95 backdrop-blur-sm shadow-pop border border-white/20">
-                  <img src="kanan-ielts-3.png" alt="IELTS class in Chennai T. Nagar" class="rounded-xl w-full object-cover" />
+                  <form id="hero-consultation-form" class="kanan-lead-form kanan-lead-form--ielts" data-kanan-lead-form novalidate
+                      data-thank-you="/ielts-chennai/thank-you.html"
+                      data-utm-source-url="ielts-chennai"
+                      data-utm-campaign="IELTS_Chennai"
+                      data-utm-category="paid_lead"
+                      data-lead-source="Google">
+                      <div class="kanan-field">
+                          <label for="hero-ielts-lead-name">Full name</label>
+                          <input id="hero-ielts-lead-name" name="name" type="text" required autocomplete="name" placeholder="Your full name" />
+                      </div>
+                      <div class="kanan-field">
+                          <label for="hero-ielts-lead-email">Email</label>
+                          <input id="hero-ielts-lead-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com" />
+                      </div>
+                      <div class="kanan-field">
+                          <label for="hero-ielts-lead-mobile">Mobile number</label>
+                          <input id="hero-ielts-lead-mobile" name="mobile_number" type="tel" required autocomplete="tel" placeholder="e.g. 9876543210 (10-digit mobile)" />
+                      </div>
+                      <div class="kanan-field">
+                          <label for="hero-ielts-package-select">Course interest</label>
+                          <select id="hero-ielts-package-select" name="remarks" required>
+                              <option value="" disabled selected>Select a course</option>
+                              <option value="IELTS Self Preparation Course">IELTS Self Preparation Course</option>
+                              <option value="IELTS Live Class Champion Course">IELTS Live Class Champion Course</option>
+                              <option value="IELTS Personalized One-to-One">IELTS Personalized One-to-One</option>
+                              <option value="Not sure yet — need guidance">Not sure yet — need guidance</option>
+                          </select>
+                      </div>
+                      <button type="submit" class="kanan-submit-btn">Book free consultation →</button>
+                      <div class="kanan-form-error" role="alert"></div>
+                  </form>
+                  <p class="text-xs text-slate-400 text-center mt-3">🔒 100% Free Consultation. No spam guaranteed.</p>
                 </div>
               </div>
             </div>
@@ -775,36 +796,58 @@
         </section>
     </main>
 
-    <!-- Consultation Form Modal -->
+        <!-- Consultation Form Modal -->
     <div id="consultation-modal" class="modal">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-6">
-                <button onclick="closeConsultationForm()" class="text-gray-400 hover:text-gray-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="modal-content" style="max-width: 520px; border-radius: 20px; overflow: hidden; background: white;">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; padding: 1.5rem 1.5rem 0.5rem;">
+                <div>
+                    <h3 style="font-size: 1.35rem; font-weight: 700; color: #111827; margin: 0;">Book your free consultation</h3>
+                    <p style="font-size: 0.875rem; color: #6b7280; margin-top: 0.25rem;">Share your details — a Kanan IELTS counsellor will reach out shortly.</p>
+                </div>
+                <button type="button" onclick="closeConsultationForm()" style="background: #f3f4f6; border: none; width: 2.25rem; height: 2.25rem; border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: #6b7280;" aria-label="Close">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
             </div>
-            
-            <!-- IELTS Chennai Form (Tally embed) -->
-            <div class="w-full">
-                <div id="form-container" style="border-radius: 8px; padding: 24px; background: white; height: 600px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-                    <iframe data-tally-src="https://tally.so/embed/me49yl?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="387" frameborder="0" marginheight="0" marginwidth="0" title="IELTS_Chennai"></iframe>
-                    <script>
-                        var d=document,w="https://tally.so/widgets/embed.js",v=function(){
-                          if(typeof Tally!=="undefined"){Tally.loadEmbeds()}else{d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach(function(e){e.src=e.dataset.tallySrc})}
-                        };
-                        if(typeof Tally!=="undefined") v();
-                        else if(d.querySelector('script[src="'+w+'"]')==null){
-                          var s=d.createElement("script");
-                          s.src=w; s.onload=v; s.onerror=v; d.body.appendChild(s);
-                        }
-                    </script>
-                </div>
+
+            <div style="padding: 1rem 1.5rem 1.5rem;">
+                <form id="consultation-form" class="kanan-lead-form kanan-lead-form--ielts" data-kanan-lead-form novalidate
+                    data-thank-you="/ielts-chennai/thank-you.html"
+                    data-utm-source-url="ielts-chennai"
+                    data-utm-campaign="IELTS_Chennai"
+                    data-utm-category="paid_lead"
+                    data-lead-source="Google">
+                    <div class="kanan-field">
+                        <label for="ielts-lead-name">Full name</label>
+                        <input id="ielts-lead-name" name="name" type="text" required autocomplete="name" placeholder="Your full name" />
+                    </div>
+                    <div class="kanan-field">
+                        <label for="ielts-lead-email">Email</label>
+                        <input id="ielts-lead-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com" />
+                    </div>
+                    <div class="kanan-field">
+                        <label for="ielts-lead-mobile">Mobile number</label>
+                        <input id="ielts-lead-mobile" name="mobile_number" type="tel" required autocomplete="tel" placeholder="e.g. 9876543210 (10-digit mobile)" />
+                    </div>
+                    <div class="kanan-field">
+                        <label for="ielts-package-select">Course interest</label>
+                        <select id="ielts-package-select" name="remarks" required>
+                            <option value="" disabled selected>Select a course</option>
+                            <option value="IELTS Self Preparation Course">IELTS Self Preparation Course</option>
+                            <option value="IELTS Live Class Champion Course">IELTS Live Class Champion Course</option>
+                            <option value="IELTS Personalized One-to-One">IELTS Personalized One-to-One</option>
+                            <option value="Not sure yet — need guidance">Not sure yet — need guidance</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="kanan-submit-btn">Book free consultation</button>
+                    <div class="kanan-form-error" role="alert"></div>
+                </form>
             </div>
+            <p style="font-size: 0.75rem; color: #9ca3af; text-align: center; padding: 0 1.5rem 1.25rem; margin: 0;">Free · No spam · Counsellor callback within 24 hours</p>
         </div>
-                </div>
-                
+    </div>
+
     <!-- Footer -->
     <footer id="contact" class="bg-brand text-white py-12" role="contentinfo">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -899,5 +942,9 @@
             </a>
         </div>
     </div>
+    <!-- Shared Kanan CRM Scripts -->
+    <script src="/shared/kanan-crm-config.js"></script>
+    <script src="/shared/kanan-lead-validation.js" defer></script>
+    <script src="/shared/kanan-lead-form.js" defer></script>
 </body>
 </html>
