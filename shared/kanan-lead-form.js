@@ -69,9 +69,11 @@
   }
 
   function restoreSubmitButton(form) {
+    delete form.dataset.kananSubmitting;
     var submitBtn = form.querySelector('button[type="submit"]');
     if (!submitBtn) return;
     submitBtn.disabled = false;
+    submitBtn.style.pointerEvents = '';
     if (submitBtn.dataset.originalText) {
       submitBtn.textContent = submitBtn.dataset.originalText;
     }
@@ -128,6 +130,12 @@
   async function handleLeadSubmit(event) {
     event.preventDefault();
     var form = event.currentTarget;
+
+    // Guard: Prevent double-click or parallel submissions from the same form
+    if (form.dataset.kananSubmitting === '1') {
+      return;
+    }
+
     var submitBtn = form.querySelector('button[type="submit"]');
     var formData = new FormData(form);
     var name = String(formData.get('name') || '').trim();
@@ -151,6 +159,17 @@
       mobile_number = validated.mobile_number;
     }
 
+    // Immediately lock submission and disable the button to prevent multiple leads
+    form.dataset.kananSubmitting = '1';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.style.pointerEvents = 'none';
+      if (!submitBtn.dataset.originalText) {
+        submitBtn.dataset.originalText = submitBtn.textContent;
+      }
+      submitBtn.textContent = 'Submitting...';
+    }
+
     var payload = {
       name: name,
       email: email,
@@ -161,12 +180,6 @@
     var landingSlug = form.dataset[LANDING_SLUG_DATASET_KEY];
     if (landingSlug != null && String(landingSlug).trim() !== '') {
       payload.utm_source_url = String(landingSlug).trim();
-    }
-
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.dataset.originalText = submitBtn.textContent;
-      submitBtn.textContent = 'Submitting...';
     }
 
     try {
@@ -187,8 +200,16 @@
         throw new Error((result && result.error) || 'Something went wrong. Please try again.');
       }
 
-      // Clear values before redirect so browser back / bfcache restores an empty form.
-      resetLeadForm(form);
+      // Success: update button to show success and keep it strictly disabled while redirecting
+      if (submitBtn) {
+        submitBtn.textContent = 'Redirecting...';
+      }
+
+      // Clear input values so browser back doesn't retain old data, but keep submission locked
+      if (typeof form.reset === 'function') {
+        form.reset();
+      }
+      clearFieldErrors(form);
 
       var thankYou = form.dataset.thankYou;
       if (thankYou) {
