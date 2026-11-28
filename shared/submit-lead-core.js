@@ -28,6 +28,23 @@ const isLambdaRuntime = Boolean(
 /** @type {Record<string, { organisation_id: string, branch_id: string, owner_id: string }> | null | undefined} */
 let cachedLandingConfig;
 
+/**
+ * In-memory short-term deduplication cache to stop duplicate leads
+ * within a 5-minute sliding window (e.g. rapid taps, multi-form submits).
+ * @type {Map<string, { timestamp: number, leadId: string | null }>}
+ */
+const recentLeadsCache = new Map();
+const DEDUP_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+function cleanupRecentLeadsCache() {
+  const now = Date.now();
+  for (const [key, value] of recentLeadsCache.entries()) {
+    if (now - value.timestamp > DEDUP_CACHE_TTL_MS) {
+      recentLeadsCache.delete(key);
+    }
+  }
+}
+
 function responseHeaders() {
   if (isLambdaRuntime) {
     return { 'Content-Type': 'application/json' };
@@ -264,6 +281,18 @@ async function createLead(data) {
     crmIds = resolveCrmIds('');
   }
 
+  const dedupKey = `${resolvedSlug || 'default'}:${mobile_number}`;
+  cleanupRecentLeadsCache();
+  const cachedLead = recentLeadsCache.get(dedupKey);
+  if (cachedLead && Date.now() - cachedLead.timestamp < DEDUP_CACHE_TTL_MS) {
+    console.info('CRM lead deduplicated (duplicate submission blocked)', {
+      slug: resolvedSlug || null,
+      mobile: mobile_number,
+      leadId: cachedLead.leadId,
+    });
+    return jsonResponse(200, { ok: true, id: cachedLead.leadId, deduplicated: true });
+  }
+
   const payload = {
     organisation_id: crmIds.organisation_id,
     branch_id: crmIds.branch_id,
@@ -327,6 +356,8 @@ async function createLead(data) {
       typeof crmBody.data === 'object'
         ? crmBody.data.id || null
         : null;
+
+    recentLeadsCache.set(dedupKey, { timestamp: Date.now(), leadId });
 
     console.info('CRM lead create ok', { slug: resolvedSlug || null, leadId });
     return jsonResponse(200, { ok: true, id: leadId });

@@ -68,6 +68,69 @@
     setFormError(form, '');
   }
 
+  var SUBMISSION_SESSION_KEY = 'kanan_recent_lead_submit';
+  var DEDUP_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
+
+  function getRecentSubmission() {
+    try {
+      var raw = sessionStorage.getItem(SUBMISSION_SESSION_KEY);
+      if (!raw) return null;
+      var data = JSON.parse(raw);
+      if (Date.now() - data.timestamp < DEDUP_WINDOW_MS) {
+        return data;
+      }
+      sessionStorage.removeItem(SUBMISSION_SESSION_KEY);
+      return null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function recordSubmission(mobile, email, thankYouUrl) {
+    try {
+      sessionStorage.setItem(
+        SUBMISSION_SESSION_KEY,
+        JSON.stringify({
+          mobile: mobile,
+          email: email,
+          thankYou: thankYouUrl || '',
+          timestamp: Date.now(),
+        })
+      );
+    } catch (_) {}
+  }
+
+  function lockAllFormsOnPage(buttonText) {
+    document.querySelectorAll('[data-kanan-lead-form]').forEach(function (f) {
+      f.dataset.kananSubmitting = '1';
+      var btn = f.querySelector('button[type="submit"]');
+      if (btn) {
+        btn.disabled = true;
+        btn.style.pointerEvents = 'none';
+        if (!btn.dataset.originalText) {
+          btn.dataset.originalText = btn.textContent;
+        }
+        if (buttonText) {
+          btn.textContent = buttonText;
+        }
+      }
+    });
+  }
+
+  function unlockAllFormsOnPage() {
+    document.querySelectorAll('[data-kanan-lead-form]').forEach(function (f) {
+      delete f.dataset.kananSubmitting;
+      var btn = f.querySelector('button[type="submit"]');
+      if (btn) {
+        btn.disabled = false;
+        btn.style.pointerEvents = '';
+        if (btn.dataset.originalText) {
+          btn.textContent = btn.dataset.originalText;
+        }
+      }
+    });
+  }
+
   function restoreSubmitButton(form) {
     delete form.dataset.kananSubmitting;
     var submitBtn = form.querySelector('button[type="submit"]');
@@ -131,8 +194,8 @@
     event.preventDefault();
     var form = event.currentTarget;
 
-    // Guard: Prevent double-click or parallel submissions from the same form
-    if (form.dataset.kananSubmitting === '1') {
+    // Guard 1: Prevent parallel/double clicks if ANY form on the page is submitting
+    if (form.dataset.kananSubmitting === '1' || document.querySelector('[data-kanan-submitting="1"]')) {
       return;
     }
 
@@ -159,16 +222,21 @@
       mobile_number = validated.mobile_number;
     }
 
-    // Immediately lock submission and disable the button to prevent multiple leads
-    form.dataset.kananSubmitting = '1';
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.style.pointerEvents = 'none';
-      if (!submitBtn.dataset.originalText) {
-        submitBtn.dataset.originalText = submitBtn.textContent;
+    var thankYou = form.dataset.thankYou || '';
+
+    // Guard 2: Cross-form & Back-button deduplication
+    // If the visitor already submitted with this exact mobile/email within 10 minutes:
+    var recent = getRecentSubmission();
+    if (recent && (recent.mobile === mobile_number || recent.email === email)) {
+      lockAllFormsOnPage('Redirecting...');
+      if (thankYou || recent.thankYou) {
+        window.location.href = thankYou || recent.thankYou;
+        return;
       }
-      submitBtn.textContent = 'Submitting...';
     }
+
+    // Immediately lock ALL forms on the page to prevent concurrent hero/modal submissions
+    lockAllFormsOnPage('Submitting...');
 
     var payload = {
       name: name,
@@ -200,24 +268,24 @@
         throw new Error((result && result.error) || 'Something went wrong. Please try again.');
       }
 
-      // Success: update button to show success and keep it strictly disabled while redirecting
-      if (submitBtn) {
-        submitBtn.textContent = 'Redirecting...';
-      }
+      // Record successful submission in sessionStorage for session-wide deduplication
+      recordSubmission(mobile_number, email, thankYou);
 
-      // Clear input values so browser back doesn't retain old data, but keep submission locked
-      if (typeof form.reset === 'function') {
-        form.reset();
-      }
-      clearFieldErrors(form);
+      // Keep all submit buttons locked with Redirecting state
+      lockAllFormsOnPage('Redirecting...');
 
-      var thankYou = form.dataset.thankYou;
+      // Clear input values
+      document.querySelectorAll('[data-kanan-lead-form]').forEach(function (f) {
+        if (typeof f.reset === 'function') f.reset();
+        clearFieldErrors(f);
+      });
+
       if (thankYou) {
         window.location.href = thankYou;
       }
     } catch (err) {
       setFormError(form, err.message || 'Something went wrong. Please try again.');
-      restoreSubmitButton(form);
+      unlockAllFormsOnPage();
     }
   }
 
@@ -241,13 +309,18 @@
     });
   }
 
-  // Clear restored values when the user returns via browser Back (bfcache or history).
+  // Clear restored values when the user returns via browser Back (bfcache or history),
+  // but if they already submitted recently, keep forms disabled and alert them if they try again.
   window.addEventListener('pageshow', function (event) {
     var nav = typeof performance !== 'undefined' && performance.getEntriesByType
       ? performance.getEntriesByType('navigation')[0]
       : null;
     if (event.persisted || (nav && nav.type === 'back_forward')) {
       resetAllLeadForms();
+      var recent = getRecentSubmission();
+      if (recent) {
+        lockAllFormsOnPage('Submitted');
+      }
     }
   });
 
